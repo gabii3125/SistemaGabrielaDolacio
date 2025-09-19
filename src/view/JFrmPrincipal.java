@@ -11,12 +11,12 @@ import javax.swing.JLabel;
  *
  * @author gabid
  */
-public class GldJFrmPrincipal extends javax.swing.JFrame {
+public class JFrmPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form JFrmPrincipal
      */
-    public GldJFrmPrincipal() {
+    public JFrmPrincipal() {
         initComponents();
         
          setTitle("Sistema de vendas de Roupas");
@@ -168,7 +168,7 @@ public class GldJFrmPrincipal extends javax.swing.JFrame {
 
     private void jMnuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuUsuariosActionPerformed
         // TODO add your handling code here:
-       GldJDlgUsuarios JDlgUsuarios = new GldJDlgUsuarios(this, true);
+       JDlgUsuarios JDlgUsuarios = new JDlgUsuarios(this, true);
         JDlgUsuarios.setVisible(true);
     
     }//GEN-LAST:event_jMnuUsuariosActionPerformed
@@ -225,14 +225,18 @@ public class GldJFrmPrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GldJFrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GldJFrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GldJFrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GldJFrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -241,7 +245,7 @@ public class GldJFrmPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GldJFrmPrincipal().setVisible(true);
+                new JFrmPrincipal().setVisible(true);
             }
         });
     }

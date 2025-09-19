@@ -12,12 +12,11 @@ import static tools.Util.pergunta;
  *
  * @author gabid
  */
-public class GldJDlgUsuarios extends javax.swing.JDialog {
-
+public class JDlgUsuarios extends javax.swing.JDialog {
     /**
      * Creates new form GldJDlgUsuarios
      */
-    public GldJDlgUsuarios(java.awt.Frame parent, boolean modal) {
+    public JDlgUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
        
@@ -270,7 +269,7 @@ public class GldJDlgUsuarios extends javax.swing.JDialog {
         Util.habilitar(false, jTxtNome, jTxtCodigo, jTxtApelido,jFmtCpf, jCboNivel, jBtnIncluir
         , jFmtDataNasc, jPwdSenha, jCboNivel, jChbAtivo, jBtnConfirmar,jBtnCancelar);
          Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-       Util.limpar(jTxtNome, jTxtCodigo, jTxtApelido,jFmtCpf, jCboNivel, jFmtCpf, jPwdSenha, jChbAtivo);
+       Util.limpar(jTxtNome, jTxtCodigo, jTxtApelido,jFmtCpf, jCboNivel, jFmtCpf, jFmtDataNasc, jPwdSenha, jChbAtivo);
     
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
 
@@ -278,7 +277,7 @@ public class GldJDlgUsuarios extends javax.swing.JDialog {
          Util.habilitar(false, jTxtNome, jTxtCodigo, jTxtApelido,jFmtCpf, jCboNivel, jBtnIncluir
         , jFmtDataNasc, jPwdSenha, jCboNivel, jChbAtivo, jBtnConfirmar,jBtnCancelar);
          Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-         Util.limpar(jTxtNome, jTxtCodigo, jTxtApelido,jFmtCpf, jCboNivel, jFmtCpf, jPwdSenha, jChbAtivo);
+         Util.limpar(jTxtNome, jTxtCodigo, jTxtApelido,jFmtCpf, jCboNivel, jFmtCpf,jFmtDataNasc, jPwdSenha, jChbAtivo);
       
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnCancelarActionPerformed
@@ -289,7 +288,7 @@ public class GldJDlgUsuarios extends javax.swing.JDialog {
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
  
-        GldJDlgUsuarioPesquisar telaPesquisar = new GldJDlgUsuarioPesquisar(null, true);
+        JDlgUsuarioPesquisar telaPesquisar = new JDlgUsuarioPesquisar(null, true);
         telaPesquisar.setVisible(true);
     
     }//GEN-LAST:event_jBtnPesquisarActionPerformed
@@ -323,20 +322,21 @@ public class GldJDlgUsuarios extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GldJDlgUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GldJDlgUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GldJDlgUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GldJDlgUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                GldJDlgUsuarios dialog = new GldJDlgUsuarios(new javax.swing.JFrame(), true);
+                JDlgUsuarios dialog = new JDlgUsuarios(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
