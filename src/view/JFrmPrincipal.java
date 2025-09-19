@@ -19,7 +19,7 @@ public class JFrmPrincipal extends javax.swing.JFrame {
     public JFrmPrincipal() {
         initComponents();
         
-         setTitle("Sistema de vendas de Roupas");
+         setTitle("Sistema de vendas de Roupas GLD");
         setLocationRelativeTo(null);
         setExtendedState(MAXIMIZED_BOTH);
         
@@ -181,21 +181,28 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 
     private void jMnuClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuClientesActionPerformed
         // TODO add your handling code here:
+        JDlgClientes JDlgClientes = new JDlgClientes(this, true);
+        JDlgClientes.setVisible(true);
     
     }//GEN-LAST:event_jMnuClientesActionPerformed
 
     private void jMnuCadastrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuCadastrosActionPerformed
         // TODO add your handling code here:
         
+        
     }//GEN-LAST:event_jMnuCadastrosActionPerformed
 
     private void jMnuFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuFuncionarioActionPerformed
         // TODO add your handling code here:
+            JDlgFuncionario JDlgFuncionario = new JDlgFuncionario(this, true);
+        JDlgFuncionario.setVisible(true);
          
     }//GEN-LAST:event_jMnuFuncionarioActionPerformed
 
     private void jMnuProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuProdutosActionPerformed
         // TODO add your handling code here:
+         JDlgProdutos JDlgProdutos = new JDlgProdutos(this, true);
+        JDlgProdutos.setVisible(true);
        
     }//GEN-LAST:event_jMnuProdutosActionPerformed
 
@@ -205,6 +212,8 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 
     private void jMnuVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuVendasActionPerformed
         // TODO add your handling code here:
+        JDlgVendas JDlgVendas = new JDlgVendas(this, true);
+        JDlgVendas.setVisible(true);
  
     }//GEN-LAST:event_jMnuVendasActionPerformed
 

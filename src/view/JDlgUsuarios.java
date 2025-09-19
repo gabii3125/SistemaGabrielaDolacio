@@ -20,7 +20,7 @@ public class JDlgUsuarios extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
        
-        setTitle("Cadastro de usuários");
+        setTitle("usuários");
         setLocationRelativeTo(null);
          Util.habilitar(false, jTxtNome, jTxtCodigo, jTxtApelido,jFmtCpf, jCboNivel
         , jFmtDataNasc, jPwdSenha, jCboNivel, jChbAtivo, jBtnConfirmar,jBtnCancelar);

@@ -16,6 +16,7 @@ public class JDlgFuncionarioPesquisar extends javax.swing.JDialog {
     public JDlgFuncionarioPesquisar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Funcionários Pesquisar");
         setLocationRelativeTo(null);
     }
 

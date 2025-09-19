@@ -21,7 +21,7 @@ public class JDlgFuncionario extends javax.swing.JDialog {
     public JDlgFuncionario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-         setTitle("Cadastro de Funcionários");
+         setTitle("Funcionários");
         setLocationRelativeTo(null);
          Util.habilitar(false, jTxtNome, jTxtCodigo, jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
