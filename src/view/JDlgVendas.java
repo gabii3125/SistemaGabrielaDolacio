@@ -283,7 +283,7 @@ public class JDlgVendas extends javax.swing.JDialog {
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
 
-        JDlgUsuarioPesquisar telaPesquisar = new JDlgUsuarioPesquisar(null, true);
+        JDlgVendasProdutos telaPesquisar = new JDlgVendasProdutos(null, true);
         telaPesquisar.setVisible(true);
 
     }//GEN-LAST:event_jBtnPesquisarActionPerformed
