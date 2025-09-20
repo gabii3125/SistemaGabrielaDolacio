@@ -270,6 +270,7 @@ public class JDlgFuncionario extends javax.swing.JDialog {
         Util.habilitar(false, jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
         Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+         int cod = Util.strToInt(jTxtCodigo.getText());
         Util.limpar(jTxtCodigo,jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
 

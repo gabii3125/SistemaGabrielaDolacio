@@ -315,6 +315,7 @@ public class JDlgVendas extends javax.swing.JDialog {
         Util.habilitar(false, jFmtDataVenda, jTxtCodigo, jTxtCliente ,jTxtUsuario, jTxtTotal
         ,jTxtDesconto, jCboFormaPagamento, jBtnConfirmar,jBtnCancelar, jBtnExcluir2, jBtnIncluir2);
         Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar );
+         int cod = Util.strToInt(jTxtCodigo.getText());
         Util.limpar(jFmtDataVenda, jTxtCodigo, jTxtCliente ,jTxtUsuario, jTxtTotal
         ,jTxtDesconto, jCboFormaPagamento);
 

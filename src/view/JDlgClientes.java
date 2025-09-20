@@ -307,6 +307,7 @@ public class JDlgClientes extends javax.swing.JDialog {
        Util.habilitar(false, jTxtNome, jTxtCodigo,jFmtCpf, jTxtEmail, jTxtTelefone, jTxtBairro
         ,jFmtNumResidencial, jTxtCidade, jTxtEstado, jTxtCep, jTxtIdade, jFmtTelefoneResidencial, jFmtDataNasc, jTxtSexo, jTxtRua, jBtnConfirmar,jBtnCancelar);
          Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+          int cod = Util.strToInt(jTxtCodigo.getText());
           Util.limpar(jTxtNome, jTxtCodigo,jFmtCpf, jTxtEmail, jTxtTelefone, jTxtBairro
         ,jFmtNumResidencial, jTxtCidade, jTxtEstado, jTxtCep, jTxtIdade, jFmtTelefoneResidencial, jFmtDataNasc, jTxtSexo, jTxtRua);
 
