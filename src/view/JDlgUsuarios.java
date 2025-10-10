@@ -270,6 +270,7 @@ public class JDlgUsuarios extends javax.swing.JDialog {
         , jFmtDataNasc, jPwdSenha, jCboNivel, jChbAtivo, jBtnConfirmar,jBtnCancelar);
          Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
          int cod = Util.strToInt(jTxtCodigo.getText());
+         
        Util.limpar(jTxtNome, jTxtCodigo, jTxtApelido,jFmtCpf, jCboNivel, jFmtCpf, jFmtDataNasc, jPwdSenha, jChbAtivo);
     
     }//GEN-LAST:event_jBtnConfirmarActionPerformed

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="sistemadolacio"/>
+  <table-filter match-name="gld_vendas_roupas_produtos"/>
+  <table-filter match-name="gld_funcionarios"/>
+  <table-filter match-name="gld_vendas_roupas"/>
+  <table-filter match-name="gld_clientes"/>
+  <table-filter match-name="gld_usuarios"/>
+  <table-filter match-name="gld_produtos_roupas"/>
+</hibernate-reverse-engineering>
