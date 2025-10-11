@@ -4,21 +4,36 @@
  */
 package view;
 
+import bean.GldUsuarios;
+import dao.UsuariosDAO;
+import view.JDlgUsuarios;
+import java.util.List;
+
+
 /**
  *
  * @author gabid
  */
 public class JDlgUsuarioPesquisar extends javax.swing.JDialog {
 
-    /**
-     * Creates new form GldJDlgUsuarioPesquisar
-     */
+     private JDlgUsuarios jDlgUsuarios;
+    ControllerUsuarios controllerUsuarios;
+    
     public JDlgUsuarioPesquisar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        initComponents();
         setTitle("Pesquisa de usuarios");
         setLocationRelativeTo(null);
+         controllerUsuarios = new ControllerUsuarios();
+        UsuariosDAO usuariosDAO = new UsuariosDAO();
+        List lista = (List) usuariosDAO.listAll();
+        controllerUsuarios.setList(lista);
+        jTable1.setModel(controllerUsuarios);
+       
+    }
+    public void setTelaAnterior( JDlgUsuarios jDlgUsuarios) {
+        this.jDlgUsuarios = jDlgUsuarios;
+   
     }
 
     /**
@@ -81,8 +96,10 @@ public class JDlgUsuarioPesquisar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
-      
-        setVisible(false);
+     
+        GldUsuarios usuarios =  controllerUsuarios.getBean( jTable1.getSelectedRow() );
+        jDlgUsuarios.beanView(usuarios);
+        this.setVisible(false);
     }//GEN-LAST:event_jBtnOkActionPerformed
 
     /**

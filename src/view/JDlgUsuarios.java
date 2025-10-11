@@ -4,7 +4,14 @@
  */
 package view;
 
+import bean.GldUsuarios;
+import dao.UsuariosDAO;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 import tools.Util;
 import static tools.Util.pergunta;
 
@@ -16,6 +23,12 @@ public class JDlgUsuarios extends javax.swing.JDialog {
     /**
      * Creates new form GldJDlgUsuarios
      */
+    private boolean incluir;
+     private MaskFormatter mascaraCpf;
+    private MaskFormatter mascaraDataNasc;
+  private boolean pesquisado = false;
+    
+    
     public JDlgUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -25,9 +38,50 @@ public class JDlgUsuarios extends javax.swing.JDialog {
          Util.habilitar(false, jTxtNome, jTxtCodigo, jTxtApelido,jFmtCpf, jCboNivel
         , jFmtDataNasc, jPwdSenha, jCboNivel, jChbAtivo, jBtnConfirmar,jBtnCancelar);
        
-    
-    
+         
+          try {
+            mascaraCpf = new MaskFormatter("###.###.###-##");
+            mascaraDataNasc = new MaskFormatter("##/##/####");
+            jFmtCpf.setFormatterFactory(new DefaultFormatterFactory(mascaraCpf));
+            jFmtDataNasc.setFormatterFactory(new DefaultFormatterFactory(mascaraDataNasc));
+           
+        } catch (ParseException ex) {
+            Logger.getLogger(JDlgUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+     public void beanView(GldUsuarios usuarios) {
+        jTxtCodigo.setText(Util.IntTostr(usuarios.getGldIdUsuarios()));
+        jTxtNome.setText(usuarios.getGldNome());
+        jTxtApelido.setText(usuarios.getGldApelido());
+        jFmtCpf.setText(usuarios.getGldCpf());
+        jFmtDataNasc.setText(Util.DataTostr(usuarios.getGldDataNascimento()));
+        jPwdSenha.setText(usuarios.getGldSenha());
+        jCboNivel.setSelectedIndex(usuarios.getGldNivel());
+        if (usuarios.getGldAtivo().equals("S") == true) {
+            jChbAtivo.setSelected(true);
+        } else {
+            jChbAtivo.setSelected(false);
+        }
+
+    }
+       public GldUsuarios viewBean() {
+        GldUsuarios usuarios = new GldUsuarios();
+        int codigo = Util.strToInt(jTxtCodigo.getText());
+        usuarios.setGldIdUsuarios(codigo);
+        usuarios.setGldNome(jTxtNome.getText());
+        usuarios.setGldApelido(jTxtApelido.getText());
+        usuarios.setGldCpf(jFmtCpf.getText());
+        usuarios.setGldDataNascimento(Util.strToData(jFmtDataNasc.getText()));
+        usuarios.setGldSenha(jPwdSenha.getText());
+        usuarios.setGldNivel(jCboNivel.getSelectedIndex());
+        if (jChbAtivo.isSelected() == true) {
+            usuarios.setGldAtivo("S");
+        } else {
+            usuarios.setGldAtivo("N");
+        }
+        return usuarios;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -246,23 +300,40 @@ public class JDlgUsuarios extends javax.swing.JDialog {
        Util.habilitar(true, jTxtNome, jTxtCodigo, jTxtApelido,jFmtCpf, jCboNivel, jBtnIncluir
         , jFmtDataNasc, jPwdSenha, jCboNivel, jChbAtivo, jBtnConfirmar,jBtnCancelar);
          Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+          Util.limpar(jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf, jFmtDataNasc,
+                jPwdSenha, jCboNivel, jChbAtivo);
+          incluir = true;
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
+        
+         if (!pesquisado) {
+            JOptionPane.showMessageDialog(this, "É necessário pesquisar um usuário antes de alterar.");
+            return;
+        }
+
+        
         Util.habilitar(true, jTxtNome, jTxtApelido,jFmtCpf, jCboNivel, jBtnIncluir
         , jFmtDataNasc, jPwdSenha, jCboNivel, jChbAtivo, jBtnConfirmar,jBtnCancelar);
          Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
         jTxtNome.grabFocus();
+        incluir = false;
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
         // TODO add your handling code here:
-       if (pergunta("Deseja excluir?")) {
-        JOptionPane.showMessageDialog(null, "Usuário excluído!");
-    } else {
-        JOptionPane.showMessageDialog(null, "Usuário não foi excluído!");
-    }
-
+         if (!pesquisado) {
+            JOptionPane.showMessageDialog(this, "É necessário pesquisar um usuário antes de excluir.");
+            return;
+        }
+        
+        
+       if (Util.pergunta("Deseja excluir ?") == true) {
+            UsuariosDAO usuariosDAO = new UsuariosDAO();
+            usuariosDAO.delete(viewBean());
+        }
+        Util.limpar(jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf, jFmtDataNasc,
+                jPwdSenha, jCboNivel, jChbAtivo);
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
@@ -270,6 +341,15 @@ public class JDlgUsuarios extends javax.swing.JDialog {
         if (!Util.validarSenha(senha)) {
         return; 
     }
+         UsuariosDAO usuariosDAO = new UsuariosDAO();
+        GldUsuarios usuarios = viewBean();
+        if (incluir == true) {
+            usuariosDAO.insert(usuarios);
+           
+        } else {
+            usuariosDAO.update(usuarios);
+            
+        }
         
         
         Util.habilitar(false, jTxtNome, jTxtCodigo, jTxtApelido,jFmtCpf, jCboNivel, jBtnIncluir
@@ -296,8 +376,10 @@ public class JDlgUsuarios extends javax.swing.JDialog {
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
  
-        JDlgUsuarioPesquisar telaPesquisar = new JDlgUsuarioPesquisar(null, true);
-        telaPesquisar.setVisible(true);
+       JDlgUsuarioPesquisar jDlgUsuariosPesquisar = new JDlgUsuarioPesquisar(null, true);
+        jDlgUsuariosPesquisar.setTelaAnterior(this);
+        jDlgUsuariosPesquisar.setVisible(true);
+        pesquisado = true;
     
     }//GEN-LAST:event_jBtnPesquisarActionPerformed
 

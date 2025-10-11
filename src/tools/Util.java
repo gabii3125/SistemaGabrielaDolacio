@@ -4,6 +4,7 @@
  */
 package tools;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -47,6 +48,8 @@ public static boolean pergunta(String cad){
     int resposta = JOptionPane.showConfirmDialog(null, cad, "Confirmação", JOptionPane.YES_NO_OPTION);
     return resposta == JOptionPane.YES_OPTION;
 }
+
+
 public static boolean validarSenha(String senha) {
     boolean tamanho = senha.length() >= 8;
     boolean Maiuscula = senha.matches(".*[A-Z].*");
@@ -54,7 +57,7 @@ public static boolean validarSenha(String senha) {
 
     if (!tamanho|| !Maiuscula || !Numero) {
         JOptionPane.showMessageDialog(null,
-            "A senha deve ter:\n- Pelo menos 8 caracteres\n- Pelo menos 1 letra maiúscula\n- Pelo menos 1 número");
+            "A senha deve conter:\n- Pelo menos 8 caracteres\n- Pelo menos 1 letra maiúscula\n- Pelo menos 1 número");
         return false;
     }
     return true;
@@ -63,18 +66,29 @@ public static int strToInt(String num){
     return Integer.parseInt(num); 
 }
 public static String IntTostr(int num){
-    return String.valueOf(num);
+    return String.valueOf(num); 
 }
-public static double strToDouble(double num){
-    return 0.0;
+public static double strToDouble(String num){
+      try {
+        return Double.parseDouble(num);
+    } catch (NumberFormatException e) {
+        return 0.0; 
+    }
 }
 public static String DoubleTostr(String num){
-    return " ";
+     return String.valueOf(num);
 }
-public static Date strToData(Date num){
-    return null;
+public static java.util.Date strToData(String dataStr) {
+    try {
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+        return sdf.parse(dataStr);
+    } catch (Exception e) {
+        return null; 
+    }
 }
-public static String DataTostr(String num){
-    return " ";
+public static String DataTostr(java.util.Date data) {
+   if (data == null) return "";
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    return sdf.format(data);
 }
 }
