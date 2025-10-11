@@ -47,6 +47,18 @@ public static boolean pergunta(String cad){
     int resposta = JOptionPane.showConfirmDialog(null, cad, "Confirmação", JOptionPane.YES_NO_OPTION);
     return resposta == JOptionPane.YES_OPTION;
 }
+public static boolean validarSenha(String senha) {
+    boolean tamanho = senha.length() >= 8;
+    boolean Maiuscula = senha.matches(".*[A-Z].*");
+    boolean Numero = senha.matches(".*[0-9].*");
+
+    if (!tamanho|| !Maiuscula || !Numero) {
+        JOptionPane.showMessageDialog(null,
+            "A senha deve ter:\n- Pelo menos 8 caracteres\n- Pelo menos 1 letra maiúscula\n- Pelo menos 1 número");
+        return false;
+    }
+    return true;
+}
 public static int strToInt(String num){
     return Integer.parseInt(num); 
 }

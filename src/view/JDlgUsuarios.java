@@ -266,6 +266,12 @@ public class JDlgUsuarios extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
+        String senha = new String(jPwdSenha.getPassword());
+        if (!Util.validarSenha(senha)) {
+        return; 
+    }
+        
+        
         Util.habilitar(false, jTxtNome, jTxtCodigo, jTxtApelido,jFmtCpf, jCboNivel, jBtnIncluir
         , jFmtDataNasc, jPwdSenha, jCboNivel, jChbAtivo, jBtnConfirmar,jBtnCancelar);
          Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
