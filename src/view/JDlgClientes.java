@@ -4,7 +4,15 @@
  */
 package view;
 
+import bean.GldClientes;
+import dao.ClientesDAO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 import tools.Util;
 import static tools.Util.pergunta;
 
@@ -13,7 +21,10 @@ import static tools.Util.pergunta;
  * @author gabid
  */
 public class JDlgClientes extends javax.swing.JDialog {
-
+     private boolean incluir;
+     private MaskFormatter mascaraCpf;
+    private MaskFormatter mascaraDataNasc;
+  private boolean pesquisado = false;
     /**
      * Creates new form GldJDlgClientes
      */
@@ -24,8 +35,60 @@ public class JDlgClientes extends javax.swing.JDialog {
         setLocationRelativeTo(null);
          Util.habilitar(false, jTxtNome, jTxtCodigo,jFmtCpf, jTxtEmail, jTxtTelefone, jTxtBairro
         , jFmtNumResidencial, jTxtCidade, jTxtEstado, jTxtCep, jTxtIdade, jFmtTelefoneResidencial, jFmtDataNasc, jTxtSexo, jTxtRua, jBtnConfirmar,jBtnCancelar);
+         
+          try {
+            mascaraCpf = new MaskFormatter("###.###.###-##");
+            mascaraDataNasc = new MaskFormatter("##/##/####");
+            jFmtCpf.setFormatterFactory(new DefaultFormatterFactory(mascaraCpf));
+            jFmtDataNasc.setFormatterFactory(new DefaultFormatterFactory(mascaraDataNasc));
+           
+        } catch (ParseException ex) {
+            Logger.getLogger(JDlgClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    
+    public void beanView(GldClientes clientes) {
+        
+     jTxtCodigo.setText(Util.IntTostr(clientes.getGldIdClientes()));
+    jTxtNome.setText(clientes.getGldNome());
+    jFmtCpf.setText(clientes.getGldCpf());
+    jTxtEmail.setText(clientes.getGldEmail());
+    jTxtTelefone.setText(clientes.getGldTelefone());
+    jTxtRua.setText(clientes.getGldRua());
+    jTxtBairro.setText(clientes.getGldBairro());
+    jFmtNumResidencial.setText(clientes.getGldNumeroCasa());
+    jTxtCidade.setText(clientes.getGldCidade());
+    jTxtEstado.setText(clientes.getGldEstado());
+    jTxtCep.setText(clientes.getGldCep());
+    jTxtIdade.setText(Util.IntTostr(clientes.getGldIdade()));
+    jFmtTelefoneResidencial.setText(clientes.getGldTelefoneresidencial());
+    jFmtDataNasc.setText(Util.DataTostr(clientes.getGldDataNascimento()));
 
+    jTxtSexo.setText(clientes.getGldSexo());
+    }
+    
+     public GldClientes viewBean() {
+        GldClientes clientes = new GldClientes();
+        int codigo = Util.strToInt(jTxtCodigo.getText());
+        clientes.setGldIdClientes(codigo);
+        clientes.setGldNome(jTxtNome.getText());
+        clientes.setGldCpf(jFmtCpf.getText());
+        clientes.setGldEmail(jTxtEmail.getText());
+        clientes.setGldTelefone(jTxtTelefone.getText());
+        clientes.setGldRua(jTxtRua.getText());
+        clientes.setGldBairro(jTxtBairro.getText());
+        clientes.setGldNumeroCasa(jFmtNumResidencial.getText());
+        clientes.setGldCidade(jTxtCidade.getText());
+        clientes.setGldEstado(jTxtEstado.getText());
+        clientes.setGldCep(jTxtCep.getText());
+        clientes.setGldIdade(Util.strToInt(jTxtIdade.getText()));
+        clientes.setGldTelefoneresidencial(jFmtTelefoneResidencial.getText());
+        clientes.setGldDataNascimento(Util.strToData(jFmtDataNasc.getText()));
+        clientes.setGldSexo(jTxtSexo.getText());
+  
+        return clientes;
+    }
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -295,19 +358,35 @@ public class JDlgClientes extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
-         if (pergunta("Deseja excluir?")) {
-        JOptionPane.showMessageDialog(null, "Usuário excluído!");
-    } else {
-        JOptionPane.showMessageDialog(null, "Usuário não foi excluído!");
-    }
+          if (!pesquisado) {
+            JOptionPane.showMessageDialog(this, "É necessário pesquisar um usuário antes de excluir.");
+            return;
+        }
+        
+        
+       if (Util.pergunta("Deseja excluir ?") == true) {
+            ClientesDAO clientesDAO = new ClientesDAO();
+            clientesDAO.delete(viewBean());
+        }
+        Util.limpar(jTxtNome, jTxtCodigo,jFmtCpf, jTxtEmail, jTxtTelefone, jTxtBairro
+        ,jFmtNumResidencial, jTxtCidade, jTxtEstado, jTxtCep, jTxtIdade, jFmtTelefoneResidencial, jFmtDataNasc, jTxtSexo, jTxtRua);
        
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
-       Util.habilitar(false, jTxtNome, jTxtCodigo,jFmtCpf, jTxtEmail, jTxtTelefone, jTxtBairro
+        ClientesDAO clientesDAO = new ClientesDAO();
+        GldClientes clientes = viewBean();
+        if (incluir == true) {
+            clientesDAO.insert(clientes);
+           
+        } else {
+            clientesDAO.update(clientes);
+            
+        }
+          
+        Util.habilitar(false, jTxtNome, jTxtCodigo,jFmtCpf, jTxtEmail, jTxtTelefone, jTxtBairro
         ,jFmtNumResidencial, jTxtCidade, jTxtEstado, jTxtCep, jTxtIdade, jFmtTelefoneResidencial, jFmtDataNasc, jTxtSexo, jTxtRua, jBtnConfirmar,jBtnCancelar);
          Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-          int cod = Util.strToInt(jTxtCodigo.getText());
           Util.limpar(jTxtNome, jTxtCodigo,jFmtCpf, jTxtEmail, jTxtTelefone, jTxtBairro
         ,jFmtNumResidencial, jTxtCidade, jTxtEstado, jTxtCep, jTxtIdade, jFmtTelefoneResidencial, jFmtDataNasc, jTxtSexo, jTxtRua);
 
@@ -324,7 +403,9 @@ public class JDlgClientes extends javax.swing.JDialog {
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
         JDlgClientesPesquisar jDlgClientesPesquisar = new JDlgClientesPesquisar(null, true);
+        jDlgClientesPesquisar.setTelaAnterior(this);
         jDlgClientesPesquisar.setVisible(true);
+        pesquisado = true;
 
        
         // TODO add your handling code here:
@@ -339,10 +420,21 @@ public class JDlgClientes extends javax.swing.JDialog {
          Util.habilitar(true, jTxtNome, jTxtCodigo,jFmtCpf, jTxtEmail, jTxtTelefone, jTxtBairro
         ,jFmtNumResidencial, jTxtCidade, jTxtEstado, jTxtCep, jTxtIdade, jFmtTelefoneResidencial, jFmtDataNasc, jTxtSexo, jTxtRua, jBtnConfirmar,jBtnCancelar);
          Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+          Util.limpar(jTxtNome, jTxtCodigo,jFmtCpf, jTxtEmail, jTxtTelefone, jTxtBairro
+        ,jFmtNumResidencial, jTxtCidade, jTxtEstado, jTxtCep, jTxtIdade, jFmtTelefoneResidencial, jFmtDataNasc, jTxtSexo, jTxtRua);
+          incluir = true;
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
-       Util.habilitar(true, jTxtNome,jFmtCpf, jTxtEmail, jTxtTelefone, jTxtBairro
+        if (!pesquisado) {
+            JOptionPane.showMessageDialog(this, "É necessário pesquisar um usuário antes de alterar.");
+            return;
+        }
+        incluir = false;
+        
+        
+        
+        Util.habilitar(true, jTxtNome,jFmtCpf, jTxtEmail, jTxtTelefone, jTxtBairro
         ,jFmtNumResidencial, jTxtCidade, jTxtEstado, jTxtCep, jTxtIdade, jFmtTelefoneResidencial, jFmtDataNasc, jTxtSexo, jTxtRua, jBtnConfirmar,jBtnCancelar);
          Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
          jTxtNome.grabFocus();

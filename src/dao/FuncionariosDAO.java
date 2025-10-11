@@ -61,7 +61,7 @@ public class FuncionariosDAO extends AbstractDAO {
         return lista;
     }
     public static void main(String[] args) {
-        FuncionariosDAO usuariosDAO = new FuncionariosDAO();
-        usuariosDAO.listAll();
+        FuncionariosDAO funcionariossDAO = new FuncionariosDAO();
+        funcionariossDAO.listAll();
     }
 }

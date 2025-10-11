@@ -61,7 +61,7 @@ public class ProdutosDAO extends AbstractDAO {
         return lista;
     }
     public static void main(String[] args) {
-        ProdutosDAO usuariosDAO = new ProdutosDAO();
-        usuariosDAO.listAll();
+        ProdutosDAO produtosDAO = new ProdutosDAO();
+        produtosDAO.listAll();
     }
 }

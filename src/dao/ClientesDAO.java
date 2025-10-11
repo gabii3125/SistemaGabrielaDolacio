@@ -61,7 +61,7 @@ public class ClientesDAO extends AbstractDAO {
         return lista;
     }
     public static void main(String[] args) {
-        ClientesDAO usuariosDAO = new ClientesDAO();
-        usuariosDAO.listAll();
+        ClientesDAO clientesDAO = new ClientesDAO();
+        clientesDAO.listAll();
     }
 }

@@ -4,12 +4,17 @@
  */
 package view;
 
+import bean.GldClientes;
+import dao.ClientesDAO;
+import java.util.List;
+
 /**
  *
  * @author gabid
  */
 public class JDlgClientesPesquisar extends javax.swing.JDialog {
-
+    private JDlgClientes jDlgClientes;
+    ControllerClientes controllerClientes;
     /**
      * Creates new form JDlgPesquisarClientes
      */
@@ -18,6 +23,15 @@ public class JDlgClientesPesquisar extends javax.swing.JDialog {
         initComponents();
         setTitle("Clientes Pesquisar");
          setLocationRelativeTo(null);
+         controllerClientes = new ControllerClientes();
+        ClientesDAO clientesDAO = new ClientesDAO();
+        List lista = (List) clientesDAO.listAll();
+        controllerClientes.setList(lista);
+        jTable1.setModel(controllerClientes);
+    }
+    public void setTelaAnterior( JDlgClientes jDlgClientes) {
+        this.jDlgClientes = jDlgClientes;
+   
     }
 
     /**
@@ -80,8 +94,10 @@ public class JDlgClientesPesquisar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
-       
-        setVisible(false);
+        GldClientes clientes =  controllerClientes.getBean( jTable1.getSelectedRow() );
+        jDlgClientes.beanView(clientes);
+        this.setVisible(false);
+      
     }//GEN-LAST:event_jBtnOkActionPerformed
 
     /**
