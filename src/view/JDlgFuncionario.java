@@ -4,7 +4,16 @@
  */
 package view;
 
+import bean.GldFuncionarios;
+import dao.ClientesDAO;
+import dao.FuncionariosDAO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 import tools.Util;
 import static tools.Util.pergunta;
 import view.JDlgFuncionarioPesquisar;
@@ -14,7 +23,10 @@ import view.JDlgFuncionarioPesquisar;
  * @author gabid
  */
 public class JDlgFuncionario extends javax.swing.JDialog {
-
+  private boolean incluir;
+     private MaskFormatter mascaraCpf;
+    private MaskFormatter mascaraDataNasc;
+  private boolean pesquisado = false;
     /**
      * Creates new form JDlgFuncionario
      */
@@ -25,7 +37,51 @@ public class JDlgFuncionario extends javax.swing.JDialog {
         setLocationRelativeTo(null);
          Util.habilitar(false, jTxtNome, jTxtCodigo, jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
+         
+          try {
+            mascaraCpf = new MaskFormatter("###.###.###-##");
+            mascaraDataNasc = new MaskFormatter("##/##/####");
+            jFmtCpf.setFormatterFactory(new DefaultFormatterFactory(mascaraCpf));
+            jFmtDataNasc.setFormatterFactory(new DefaultFormatterFactory(mascaraDataNasc));
+           
+        } catch (ParseException ex) {
+            Logger.getLogger(JDlgFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     
+    }
+    public void beanView(GldFuncionarios funcionario) {
+        jTxtCodigo.setText(Util.IntTostr(funcionario.getGldIdFuncionario()));
+        jTxtNome.setText(funcionario.getGldNome());
+        jFmtCpf.setText(funcionario.getGldCpf());
+        jFmtDataNasc.setText(Util.DataTostr(funcionario.getGldDataNascimento()));
+        jTxtEmail.setText(funcionario.getGldEmail());
+        jTxtTelefone.setText(funcionario.getGldTelefone());
+        jTxtFuncao.setText(funcionario.getGldFuncao());
+        jTxtSalario.setText(Util.DoubleTostr(funcionario.getGldSalario()));
+       if (jChbAtivo1.isSelected() == true) {
+            funcionario.setGldAtivo("S");
+        } else {
+            funcionario.setGldAtivo("N");
+        }
+
+    }
+      public GldFuncionarios viewBean() {
+        GldFuncionarios funcionario = new GldFuncionarios();
+        int codigo = Util.strToInt(jTxtCodigo.getText());
+        funcionario.setGldIdFuncionario(codigo);
+        funcionario.setGldNome(jTxtNome.getText());
+        funcionario.setGldCpf(jFmtCpf.getText());
+        funcionario.setGldDataNascimento(Util.strToData(jFmtDataNasc.getText()));
+        funcionario.setGldEmail(jTxtEmail.getText());
+        funcionario.setGldTelefone(jTxtTelefone.getText());
+        funcionario.setGldFuncao(jTxtFuncao.getText());
+        funcionario.setGldSalario(Util.strToDouble(jTxtSalario.getText()));
+         if (jChbAtivo1.isSelected() == true) {
+            funcionario.setGldAtivo("S");
+        } else {
+            funcionario.setGldAtivo("N");
+        }        
+        return funcionario;
     }
 
     /**
@@ -238,19 +294,35 @@ public class JDlgFuncionario extends javax.swing.JDialog {
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
 
-        JDlgFuncionarioPesquisar telaPesquisar = new JDlgFuncionarioPesquisar(null, true);
-        telaPesquisar.setVisible(true);
+         JDlgFuncionarioPesquisar jDlgFuncionarioPesquisar = new JDlgFuncionarioPesquisar(null, true);
+        jDlgFuncionarioPesquisar.setTelaAnterior(this);
+        jDlgFuncionarioPesquisar.setVisible(true);
+        pesquisado = true;
 
     }//GEN-LAST:event_jBtnPesquisarActionPerformed
 
     private void jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIncluirActionPerformed
         // TODO add your handling code here: jBtnConfirmar.setEnabled(false);
+      
+        
+        incluir = true;
         Util.habilitar(true, jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
         Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        
+         Util.limpar(jTxtCodigo,jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
+            , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
+         if (!pesquisado) {
+            JOptionPane.showMessageDialog(this, "É necessário pesquisar um usuário antes de alterar.");
+            return;
+        }
+        incluir = false;
+        
+        
+        
         Util.habilitar(true, jTxtNome,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
         Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
@@ -259,18 +331,35 @@ public class JDlgFuncionario extends javax.swing.JDialog {
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
         // TODO add your handling code here:
-        if (pergunta("Deseja excluir?")) {
-            JOptionPane.showMessageDialog(null, "Usuário excluído!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuário não foi excluído!");
+        if (!pesquisado) {
+            JOptionPane.showMessageDialog(this, "É necessário pesquisar um usuário antes de excluir.");
+            return;
         }
+        
+        
+       if (Util.pergunta("Deseja excluir ?") == true) {
+            FuncionariosDAO funcionariosDAO = new FuncionariosDAO();
+            funcionariosDAO.delete(viewBean());
+        }
+        
+         Util.limpar(jTxtCodigo,jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
+            , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
+        FuncionariosDAO funcionariosDAO = new FuncionariosDAO();
+        GldFuncionarios funcionarios = viewBean();
+        if (incluir == true) {
+            funcionariosDAO.insert(funcionarios);
+           
+        } else {
+            funcionariosDAO.update(funcionarios);
+            
+        }
+        
         Util.habilitar(false, jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
         Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-         int cod = Util.strToInt(jTxtCodigo.getText());
         Util.limpar(jTxtCodigo,jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
 

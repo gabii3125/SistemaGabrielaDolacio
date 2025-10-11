@@ -4,12 +4,19 @@
  */
 package view;
 
+import bean.GldFuncionarios;
+import dao.FuncionariosDAO;
+import java.util.List;
+
 /**
  *
  * @author gabid
  */
 public class JDlgFuncionarioPesquisar extends javax.swing.JDialog {
 
+    
+     private JDlgFuncionario jDlgFuncionario;
+    ControllerFuncionario controllerFuncionario;
     /**
      * Creates new form JDlgFuncionarioPesquisar
      */
@@ -18,6 +25,15 @@ public class JDlgFuncionarioPesquisar extends javax.swing.JDialog {
         initComponents();
         setTitle("Funcionários Pesquisar");
         setLocationRelativeTo(null);
+        controllerFuncionario = new ControllerFuncionario();
+        FuncionariosDAO funcionariosDAO = new FuncionariosDAO();
+        List lista = (List) funcionariosDAO.listAll();
+        controllerFuncionario.setList(lista);
+        jTable1.setModel(controllerFuncionario);
+    }
+     public void setTelaAnterior( JDlgFuncionario jDlgFuncionario) {
+        this.jDlgFuncionario = jDlgFuncionario;
+   
     }
 
     /**
@@ -80,8 +96,10 @@ public class JDlgFuncionarioPesquisar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
-
-        setVisible(false);
+         GldFuncionarios funcionario =  controllerFuncionario.getBean( jTable1.getSelectedRow() );
+        jDlgFuncionario.beanView(funcionario);
+        this.setVisible(false);
+       
     }//GEN-LAST:event_jBtnOkActionPerformed
 
     /**

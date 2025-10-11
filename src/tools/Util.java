@@ -75,7 +75,7 @@ public static double strToDouble(String num){
         return 0.0; 
     }
 }
-public static String DoubleTostr(String num){
+public static String DoubleTostr(double num){
      return String.valueOf(num);
 }
 public static java.util.Date strToData(String dataStr) {
