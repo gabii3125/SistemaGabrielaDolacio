@@ -84,13 +84,13 @@
                               <Component id="jTxtTotal" min="-2" pref="72" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jTxtDesconto" min="-2" pref="72" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jCboFormaPagamento" min="-2" pref="129" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jTxtFormaPagamento" min="-2" pref="118" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="29" max="32767" attributes="0"/>
+              <EmptySpace pref="35" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -118,7 +118,7 @@
                   <Component id="jCboUsuarios" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTxtTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTxtDesconto" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jCboFormaPagamento" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTxtFormaPagamento" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -333,16 +333,10 @@
         <Property name="text" type="java.lang.String" value="Forma de Pagamento"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jCboFormaPagamento">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
-            <StringItem index="0" value="Cart&#xe3;o"/>
-            <StringItem index="1" value="Dinheiro "/>
-            <StringItem index="2" value="Pix"/>
-          </StringArray>
-        </Property>
-      </Properties>
+    <Component class="javax.swing.JTextField" name="jTxtFormaPagamento">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTxtFormaPagamentoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -9,7 +9,15 @@ import bean.GldClientes;
 import bean.GldVendasRoupas;
 import bean.GldUsuarios;
 import dao.ClientesDAO;
+import dao.UsuariosDAO;
+import dao.VendasDAO;
+import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 import tools.Util;
 
 /**
@@ -18,6 +26,10 @@ import tools.Util;
  */
 public class JDlgVendas extends javax.swing.JDialog {
 
+     private boolean incluir;
+    
+    private MaskFormatter mascaraDataVenda;
+  private boolean pesquisado = false;
     /**
      * Creates new form JDlgPedidos
      */
@@ -25,12 +37,36 @@ public class JDlgVendas extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+         Util.habilitar(false, jTxtCodigo, jFmtDataVenda, jTxtTotal, jTxtDesconto,
+            jTxtFormaPagamento, jCboClientes, jCboUsuarios, 
+            jBtnConfirmar, jBtnCancelar);
+        
+        
+        
         ClientesDAO clientesDAO = new ClientesDAO();
         List lista = (List) clientesDAO.listAll();
         for (int i = 0; i < lista.size(); i++) {
             jCboClientes.addItem( (GldClientes) lista.get(i));            
         }
+        
+         try {
+          
+            mascaraDataVenda = new MaskFormatter("##/##/####");
+            jFmtDataVenda.setFormatterFactory(new DefaultFormatterFactory(mascaraDataVenda));
+           
+        } catch (ParseException ex) {
+            Logger.getLogger(JDlgVendas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+     public void beanView(GldVendasRoupas vendasRoupas) {
+        jTxtCodigo.setText(Util.IntTostr(vendasRoupas.getGldIdVendas() ));
+        jFmtDataVenda.setText(Util.DataTostr(vendasRoupas.getGldDataVenda()));
+        jTxtTotal.setText(Util.DoubleTostr(vendasRoupas.getGldTotal()));
+        jTxtDesconto.setText(Util.DoubleTostr(vendasRoupas.getGldDesconto()));
+        jTxtFormaPagamento.setText(vendasRoupas.getGldFormaPagamento());
+        jCboClientes.setSelectedItem(vendasRoupas.getGldClientes());
+        jCboUsuarios.setSelectedItem(vendasRoupas.getGldUsuarios());
+     }
     
     public GldVendasRoupas viewBean() {
         GldVendasRoupas gldVendasRoupas = new GldVendasRoupas();
@@ -38,7 +74,7 @@ public class JDlgVendas extends javax.swing.JDialog {
         gldVendasRoupas.setGldDataVenda(Util.strToData(jFmtDataVenda.getText()));
         gldVendasRoupas.setGldTotal(Util.strToDouble(jTxtTotal.getText()));
         gldVendasRoupas.setGldDesconto(Util.strToDouble(jTxtDesconto.getText()));
-        gldVendasRoupas.setGldFormaPagamento(jCboFormaPagamento.getSelectedIndex());
+        gldVendasRoupas.setGldFormaPagamento(jTxtFormaPagamento.getText());
         gldVendasRoupas.setGldClientes((GldClientes) jCboClientes.getSelectedItem());
         gldVendasRoupas.setGldUsuarios((GldUsuarios) jCboUsuarios.getSelectedItem());
         return gldVendasRoupas;
@@ -78,7 +114,7 @@ public class JDlgVendas extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         jTxtDesconto = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jCboFormaPagamento = new javax.swing.JComboBox();
+        jTxtFormaPagamento = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -184,7 +220,11 @@ public class JDlgVendas extends javax.swing.JDialog {
 
         jLabel8.setText("Forma de Pagamento");
 
-        jCboFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cartão", "Dinheiro ", "Pix" }));
+        jTxtFormaPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTxtFormaPagamentoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -244,9 +284,9 @@ public class JDlgVendas extends javax.swing.JDialog {
                                 .addComponent(jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTxtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCboFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTxtFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +310,7 @@ public class JDlgVendas extends javax.swing.JDialog {
                     .addComponent(jCboUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCboFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTxtFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -295,70 +335,78 @@ public class JDlgVendas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
-        // TODO add your handling code here:
-//        Util.habilitar(false, jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf,
-//            jFmtDataDeNascimento, jPwfSenha, jCboNivel, jChbAtivo,
-//            jBtnConfirmar, jBtnCancelar);
-//        Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-//        Util.limpar(jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf, jFmtDataDeNascimento,
-//            jPwfSenha, jCboNivel, jChbAtivo);
+       
+        Util.habilitar(false, jTxtCodigo, jFmtDataVenda, jTxtTotal, jTxtDesconto,
+            jTxtFormaPagamento, jCboClientes, jCboUsuarios, 
+            jBtnConfirmar, jBtnCancelar);
+        Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        Util.limpar(jTxtCodigo, jFmtDataVenda, jTxtTotal, jTxtDesconto);
     }//GEN-LAST:event_jBtnCancelarActionPerformed
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
-        // TODO add your handling code here:
-//        JDlgUsuariosPesquisar jDlgUsuariosPesquisar = new JDlgUsuariosPesquisar(null, true);
-//        jDlgUsuariosPesquisar.setTelaAnterior(this);
-//        jDlgUsuariosPesquisar.setVisible(true);
+        JDlgVendasPesquisar jDlgVendasPesquisar = new JDlgVendasPesquisar(null, true);
+        jDlgVendasPesquisar.setTelaAnterior(this);
+        jDlgVendasPesquisar.setVisible(true);
+        pesquisado = true;
     }//GEN-LAST:event_jBtnPesquisarActionPerformed
 
     private void jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIncluirActionPerformed
-        // TODO add your handling code here:
-//        Util.habilitar(true, jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf,
-//            jFmtDataDeNascimento, jPwfSenha, jCboNivel, jChbAtivo,
-//            jBtnConfirmar, jBtnCancelar);
-//        Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-//        Util.limpar(jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf, jFmtDataDeNascimento,
-//            jPwfSenha, jCboNivel, jChbAtivo);
-//        incluir = true;
+     
+          Util.habilitar(true, jTxtCodigo, jFmtDataVenda, jTxtTotal, jTxtDesconto,
+        jTxtFormaPagamento, jCboClientes, jCboUsuarios, 
+        jBtnConfirmar, jBtnCancelar);
+
+       Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+
+    Util.limpar(jTxtCodigo, jFmtDataVenda, jTxtTotal, jTxtDesconto);
+        incluir = true;
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
-        // TODO add your handling code here:
-//        Util.habilitar(true, jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf,
-//            jFmtDataDeNascimento, jPwfSenha, jCboNivel, jChbAtivo,
-//            jBtnConfirmar, jBtnCancelar);
-//        Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-//        incluir = false;
+        if (!pesquisado) {
+            JOptionPane.showMessageDialog(this, "É necessário pesquisar um usuário antes de alterar.");
+            return;
+        }
+  Util.habilitar(true, jTxtCodigo, jFmtDataVenda, jTxtTotal, jTxtDesconto,
+        jTxtFormaPagamento, jCboClientes, jCboUsuarios, 
+        jBtnConfirmar, jBtnCancelar);
+
+       Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+
+    jFmtDataVenda.grabFocus();
+        incluir = false;
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
-        // TODO add your handling code here:
-//        if (Util.perguntar("Deseja excluir ?") == true) {
-//            UsuariosDAO usuariosDAO = new UsuariosDAO();
-//            usuariosDAO.delete(viewBean());
-//        }
-//        Util.limpar(jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf, jFmtDataDeNascimento,
-//            jPwfSenha, jCboNivel, jChbAtivo);
+     if (!pesquisado) {
+            JOptionPane.showMessageDialog(this, "É necessário pesquisar um usuário antes de excluir.");
+            return;
+        }
+        
+        
+       if (Util.pergunta("Deseja excluir ?") == true) {
+            VendasDAO vendasDAO = new VendasDAO();
+            vendasDAO.delete(viewBean());
+        }
+       Util.limpar(jTxtCodigo, jFmtDataVenda, jTxtTotal, jTxtDesconto);
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
-        // TODO add your handling code here:
-//        UsuariosDAO usuariosDAO = new UsuariosDAO();
-        GldVendasRoupas gldVendasRoupas = viewBean();
-//        if (incluir == true) {
-//            pedidosDAO.insert(pedidos);
-//            usuariosDAO.insert( viewBean() );
-//        } else {
-//            usuariosDAO.update(usuarios);
-//            //usuariosDAO.update( viewBean() );
-//        }
-//
-//        Util.habilitar(false, jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf,
-//            jFmtDataDeNascimento, jPwfSenha, jCboNivel, jChbAtivo,
-//            jBtnConfirmar, jBtnCancelar);
-//        Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-//        Util.limpar(jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf, jFmtDataDeNascimento,
-//            jPwfSenha, jCboNivel, jChbAtivo);
+       
+        
+    VendasDAO vendasDAO = new VendasDAO(); 
+    GldVendasRoupas vendasRoupas = viewBean();
+    
+    if (incluir) {
+        vendasDAO.insert(vendasRoupas); 
+    } else {
+        vendasDAO.update(vendasRoupas);  
+    }
+         Util.habilitar(false, jTxtCodigo, jFmtDataVenda, jTxtTotal, jTxtDesconto,
+            jTxtFormaPagamento, jCboClientes, jCboUsuarios, 
+            jBtnConfirmar, jBtnCancelar);
+        Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        Util.limpar(jTxtCodigo, jFmtDataVenda, jTxtTotal, jTxtDesconto);
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
 
     private void jBtnExcluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirProdActionPerformed
@@ -383,6 +431,10 @@ public class JDlgVendas extends javax.swing.JDialog {
     private void jCboUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCboUsuariosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCboUsuariosActionPerformed
+
+    private void jTxtFormaPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtFormaPagamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtFormaPagamentoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -438,7 +490,6 @@ public class JDlgVendas extends javax.swing.JDialog {
     private javax.swing.JButton jBtnIncluirProd;
     private javax.swing.JButton jBtnPesquisar;
     private javax.swing.JComboBox<GldClientes> jCboClientes;
-    private javax.swing.JComboBox jCboFormaPagamento;
     private javax.swing.JComboBox<GldUsuarios> jCboUsuarios;
     private javax.swing.JFormattedTextField jFmtDataVenda;
     private javax.swing.JLabel jLabel1;
@@ -453,6 +504,7 @@ public class JDlgVendas extends javax.swing.JDialog {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTxtCodigo;
     private javax.swing.JTextField jTxtDesconto;
+    private javax.swing.JTextField jTxtFormaPagamento;
     private javax.swing.JTextField jTxtTotal;
     // End of variables declaration//GEN-END:variables
 }

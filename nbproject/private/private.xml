@@ -3,7 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/gabid/OneDrive/Documentos/NetBeansProjects/SistemaGabrielaDolacio/src/view/JDlgFuncionario.java</file>
+            <file>file:/C:/Users/gabid/OneDrive/Documentos/NetBeansProjects/SistemaGabrielaDolacio/src/dao/AbstractDAO.java</file>
+            <file>file:/C:/Users/gabid/OneDrive/Documentos/NetBeansProjects/SistemaGabrielaDolacio/src/view/JDlgVendas.java</file>
+            <file>file:/C:/Users/gabid/OneDrive/Documentos/NetBeansProjects/SistemaGabrielaDolacio/src/view/JDlgUsuarios.java</file>
+            <file>file:/C:/Users/gabid/OneDrive/Documentos/NetBeansProjects/SistemaGabrielaDolacio/src/bean/GldVendasRoupas.java</file>
         </group>
     </open-files>
 </project-private>

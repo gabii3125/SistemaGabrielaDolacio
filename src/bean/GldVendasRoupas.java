@@ -32,7 +32,7 @@ public class GldVendasRoupas  implements java.io.Serializable {
      private GldUsuarios gldUsuarios;
      private Date gldDataVenda;
      private double gldTotal;
-     private int gldFormaPagamento;
+     private String gldFormaPagamento;
      private double gldDesconto;
     
 
@@ -40,14 +40,14 @@ public class GldVendasRoupas  implements java.io.Serializable {
     }
 
 	
-    public GldVendasRoupas(int gldIdVendas, Date gldDataVenda, double gldTotal, int gldFormaPagamento, double gldDesconto) {
+    public GldVendasRoupas(int gldIdVendas, Date gldDataVenda, double gldTotal, String gldFormaPagamento, double gldDesconto) {
         this.gldIdVendas = gldIdVendas;
         this.gldDataVenda = gldDataVenda;
         this.gldTotal = gldTotal;
         this.gldFormaPagamento = gldFormaPagamento;
         this.gldDesconto = gldDesconto;
     }
-    public GldVendasRoupas(int gldIdVendas, GldClientes gldClientes, GldUsuarios gldUsuarios, Date gldDataVenda, double gldTotal, int gldFormaPagamento, double gldDesconto, Set gldVendasRoupasProdutoses) {
+    public GldVendasRoupas(int gldIdVendas, GldClientes gldClientes, GldUsuarios gldUsuarios, Date gldDataVenda, double gldTotal, String gldFormaPagamento, double gldDesconto, Set gldVendasRoupasProdutoses) {
        this.gldIdVendas = gldIdVendas;
        this.gldClientes = gldClientes;
        this.gldUsuarios = gldUsuarios;
@@ -112,11 +112,11 @@ public class GldVendasRoupas  implements java.io.Serializable {
 
     
     @Column(name="gld_forma_pagamento", nullable=false, length=50)
-    public int getGldFormaPagamento() {
+    public String getGldFormaPagamento() {
         return this.gldFormaPagamento;
     }
     
-    public void setGldFormaPagamento(int gldFormaPagamento) {
+    public void setGldFormaPagamento(String gldFormaPagamento) {
         this.gldFormaPagamento = gldFormaPagamento;
     }
 
