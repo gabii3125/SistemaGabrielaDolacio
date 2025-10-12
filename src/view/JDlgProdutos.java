@@ -4,7 +4,14 @@
  */
 package view;
 
+import bean.GldProdutosRoupas;
+import dao.ProdutosDAO;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 import tools.Util;
 import static tools.Util.pergunta;
 
@@ -13,7 +20,8 @@ import static tools.Util.pergunta;
  * @author gabid
  */
 public class JDlgProdutos extends javax.swing.JDialog {
-
+    private boolean incluir;
+    private boolean pesquisado = false;
     /**
      * Creates new form JDlgProdutos
      */
@@ -24,9 +32,35 @@ public class JDlgProdutos extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         Util.habilitar(false, jTxtNome, jTxtCodigo,jTxtCategoria, jTxtTamanho,jTxtCor, jTxtPreco, jTxtDescricao1
             , jBtnConfirmar,jBtnCancelar);
+        
     
     }
-
+     public void beanView(GldProdutosRoupas produtosRoupas) {
+         
+            jTxtCodigo.setText(Util.IntTostr(produtosRoupas.getGldIdProdutos()));
+            
+            jTxtNome.setText(produtosRoupas.getGldNome());
+            jTxtCategoria.setText(produtosRoupas.getGldCategoria());
+            jTxtTamanho.setText(produtosRoupas.getGldTamanho());
+            jTxtCor.setText(produtosRoupas.getGldCor());
+            jTxtPreco.setText(Util.DoubleTostr(produtosRoupas.getGldPreco()));
+            jTxtDescricao1.setText(produtosRoupas.getGldDescricao());
+            
+     }
+     public GldProdutosRoupas viewBean() {
+        GldProdutosRoupas produtosRoupas = new GldProdutosRoupas();
+        int codigo = Util.strToInt(jTxtCodigo.getText());
+        produtosRoupas.setGldIdProdutos(codigo);
+        produtosRoupas.setGldNome(jTxtNome.getText());
+        produtosRoupas.setGldCategoria(jTxtCategoria.getText());
+        produtosRoupas.setGldTamanho(jTxtTamanho.getText());
+        produtosRoupas.setGldCor(jTxtCor.getText());
+        produtosRoupas.setGldPreco(Util.strToDouble(jTxtPreco.getText()));
+        produtosRoupas.setGldDescricao(jTxtDescricao1.getText());
+       
+      
+        return produtosRoupas;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -218,14 +252,31 @@ public class JDlgProdutos extends javax.swing.JDialog {
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
         // TODO add your handling code here:
-        if (pergunta("Deseja excluir?")) {
-            JOptionPane.showMessageDialog(null, "Usuário excluído!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuário não foi excluído!");
+        if (!pesquisado) {
+            JOptionPane.showMessageDialog(this, "É necessário pesquisar um usuário antes de excluir.");
+            return;
         }
+        
+        
+       if (Util.pergunta("Deseja excluir ?") == true) {
+            ProdutosDAO produtosDAO = new ProdutosDAO();
+            produtosDAO.delete(viewBean());
+        }
+         Util.limpar(jTxtNome, jTxtCodigo,jTxtCategoria, jTxtTamanho,jTxtCor, jTxtPreco, jTxtDescricao1);
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
+       
+         ProdutosDAO produtosDAO = new ProdutosDAO();
+        GldProdutosRoupas produtosRoupas = viewBean();
+        if (incluir == true) {
+            produtosDAO.insert(produtosRoupas);
+           
+        } else {
+            produtosDAO.update(produtosRoupas);
+            
+        }
+        
         Util.habilitar(false, jTxtNome, jTxtCodigo,jTxtCategoria, jTxtTamanho,jTxtCor, jTxtPreco, jTxtDescricao1, jBtnIncluir
             , jBtnConfirmar,jBtnCancelar);
         Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
@@ -244,8 +295,10 @@ public class JDlgProdutos extends javax.swing.JDialog {
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
 
-        JDlgProdutosPesquisar telaPesquisar = new JDlgProdutosPesquisar(null, true);
-        telaPesquisar.setVisible(true);
+       JDlgProdutosPesquisar jDlgProdutosPesquisar = new JDlgProdutosPesquisar(null, true);
+        jDlgProdutosPesquisar.setTelaAnterior(this);
+        jDlgProdutosPesquisar.setVisible(true);
+        pesquisado = true;
     }//GEN-LAST:event_jBtnPesquisarActionPerformed
 
     private void jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIncluirActionPerformed
@@ -253,13 +306,22 @@ public class JDlgProdutos extends javax.swing.JDialog {
         Util.habilitar(true, jTxtNome, jTxtCodigo,jTxtCategoria, jTxtTamanho,jTxtCor, jTxtPreco, jTxtDescricao1, jBtnIncluir
             , jBtnConfirmar,jBtnCancelar);
         Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        incluir = true;
+        
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
+        if (!pesquisado) {
+            JOptionPane.showMessageDialog(this, "É necessário pesquisar um usuário antes de alterar.");
+            return;
+        }
+        
+        
         Util.habilitar(true, jTxtNome,jTxtCategoria, jTxtTamanho,jTxtCor, jTxtPreco, jTxtDescricao1, jBtnIncluir
             , jBtnConfirmar,jBtnCancelar);
         Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
         jTxtNome.grabFocus();
+        incluir = false;
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     /**

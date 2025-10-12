@@ -4,12 +4,17 @@
  */
 package view;
 
+import bean.GldProdutosRoupas;
+import dao.ProdutosDAO;
+import java.util.List;
+
 /**
  *
  * @author gabid
  */
 public class JDlgProdutosPesquisar extends javax.swing.JDialog {
-
+    private JDlgProdutos jDlgProdutos;
+    ControllerProdutos controllerProdutos;
     /**
      * Creates new form JDlgProdutosPesquisar
      */
@@ -18,6 +23,15 @@ public class JDlgProdutosPesquisar extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Produtos Pesquisar");
+        controllerProdutos = new ControllerProdutos();
+        ProdutosDAO produtosDAO = new ProdutosDAO();
+        List lista = (List) produtosDAO.listAll();
+        controllerProdutos.setList(lista);
+        jTable1.setModel(controllerProdutos);
+    }
+    public void setTelaAnterior( JDlgProdutos jDlgProdutos) {
+        this.jDlgProdutos = jDlgProdutos;
+   
     }
 
     /**
@@ -81,7 +95,9 @@ public class JDlgProdutosPesquisar extends javax.swing.JDialog {
 
     private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
 
-        setVisible(false);
+         GldProdutosRoupas produtosRoupas =  controllerProdutos.getBean( jTable1.getSelectedRow() );
+        jDlgProdutos.beanView(produtosRoupas);
+        this.setVisible(false);
     }//GEN-LAST:event_jBtnOkActionPerformed
 
     /**

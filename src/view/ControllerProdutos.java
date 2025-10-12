@@ -4,25 +4,25 @@
  */
 package view;
 
-import bean.GldUsuarios;
+import bean.GldProdutosRoupas;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class ControllerUsuarios extends AbstractTableModel {
+public class ControllerProdutos extends AbstractTableModel {
 
-    private List lstUsuarios;
+    private List lstProdutosRoupas;
 
-    public void setList(List lstUsuarios) {
-        this.lstUsuarios = lstUsuarios;
+    public void setList(List lstProdutosRoupas) {
+        this.lstProdutosRoupas = lstProdutosRoupas;
     }
     
-    public GldUsuarios getBean(int rowIndex) {
-        return (GldUsuarios) lstUsuarios.get(rowIndex);
+    public GldProdutosRoupas getBean(int rowIndex) {
+        return (GldProdutosRoupas) lstProdutosRoupas.get(rowIndex);
     }
 
     @Override
     public int getRowCount() {
-        return lstUsuarios.size();
+        return lstProdutosRoupas.size();
                 
     }
 
@@ -33,15 +33,15 @@ public class ControllerUsuarios extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        GldUsuarios usuarios = (GldUsuarios) lstUsuarios.get( rowIndex);
+        GldProdutosRoupas produtosRoupas = (GldProdutosRoupas) lstProdutosRoupas.get( rowIndex);
         if ( columnIndex == 0 ){
-            return usuarios.getGldIdUsuarios();
+            return produtosRoupas.getGldIdProdutos();
         } else if (columnIndex ==1) {
-            return usuarios.getGldNome();        
+            return produtosRoupas.getGldNome();        
         } else if (columnIndex ==2) {
-            return usuarios.getGldApelido();
+            return produtosRoupas.getGldCategoria();
         } else if (columnIndex ==3) {
-            return usuarios.getGldCpf();
+            return produtosRoupas.getGldTamanho();
         }
         return "";
     }
@@ -53,9 +53,9 @@ public class ControllerUsuarios extends AbstractTableModel {
         } else if ( columnIndex == 1) {
             return "Nome";         
         } else if ( columnIndex == 2) {
-            return "Apelido";
+            return "Categoria";
         } else if ( columnIndex == 3) {
-            return "Cpf";
+            return "Tamanho";
         } 
         return "";
     }

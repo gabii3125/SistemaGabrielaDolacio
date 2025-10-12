@@ -81,6 +81,7 @@ public class JDlgFuncionario extends javax.swing.JDialog {
         } else {
             funcionario.setGldAtivo("N");
         }        
+      
         return funcionario;
     }
 
