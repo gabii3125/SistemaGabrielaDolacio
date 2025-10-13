@@ -4,9 +4,12 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sistemadolacio?zeroDateTimeBehavior=convertToNull</property>
+<!--    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sistemadolacio?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">3125</property>
+    <property name="hibernate.connection.password">3125</property>-->
+     <property name="hibernate.connection.url">jdbc:mysql://10.7.0.51:33062/db_gabriela_dolacio?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">gabriela_dolacio</property>
+    <property name="hibernate.connection.password">gabriela_dolacio</property>
     <mapping class="bean.GldVendasRoupas"/>
     <mapping class="bean.GldVendasRoupasProdutos"/>
     <mapping class="bean.GldUsuarios"/>
