@@ -49,6 +49,12 @@ public class JDlgVendas extends javax.swing.JDialog {
             jCboClientes.addItem( (GldClientes) lista.get(i));            
         }
         
+        UsuariosDAO usuariosDAO = new UsuariosDAO();
+        List listaUsuarios = (List) usuariosDAO.listAll();
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+         jCboUsuarios.addItem((GldUsuarios) listaUsuarios.get(i));            
+}
+        
          try {
           
             mascaraDataVenda = new MaskFormatter("##/##/####");

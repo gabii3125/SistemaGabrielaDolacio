@@ -231,6 +231,19 @@ public class GldClientes  implements java.io.Serializable {
     public void setGldSexo(String gldSexo) {
         this.gldSexo = gldSexo;
     }
+    
+    @Override
+    public String toString() {
+    return this.getGldNome(); 
+}
+    @Override
+public boolean equals(Object obj) {
+    if (obj instanceof GldClientes) {
+        GldClientes clientes = (GldClientes) obj;
+        return this.getGldIdClientes()== clientes.getGldIdClientes();
+    }
+    return false;
+}
 
    
 }

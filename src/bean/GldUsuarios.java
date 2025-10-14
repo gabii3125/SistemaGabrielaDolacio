@@ -139,7 +139,19 @@ public class GldUsuarios  implements java.io.Serializable {
     public void setGldAtivo(String gldAtivo) {
         this.gldAtivo = gldAtivo;
     }
-
+       
+     @Override
+    public String toString() {
+    return this.getGldNome(); 
+}
+    @Override
+    public boolean equals(Object obj) {
+    if (obj instanceof GldUsuarios) {
+        GldUsuarios usuario = (GldUsuarios) obj;
+        return this.getGldIdUsuarios()== usuario.getGldIdUsuarios();
+    }
+    return false;
+}
 
 
 
