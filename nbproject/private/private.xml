@@ -6,7 +6,12 @@
             <file>file:/C:/Users/gabid/OneDrive/Documentos/NetBeansProjects/SistemaGabrielaDolacio/src/dao/AbstractDAO.java</file>
             <file>file:/C:/Users/gabid/OneDrive/Documentos/NetBeansProjects/SistemaGabrielaDolacio/src/view/JDlgVendas.java</file>
             <file>file:/C:/Users/gabid/OneDrive/Documentos/NetBeansProjects/SistemaGabrielaDolacio/src/view/JDlgUsuarios.java</file>
+            <file>file:/C:/Users/gabid/OneDrive/Documentos/NetBeansProjects/SistemaGabrielaDolacio/src/hibernate.cfg.xml</file>
+            <file>file:/C:/Users/gabid/OneDrive/Documentos/NetBeansProjects/SistemaGabrielaDolacio/src/bean/GldUsuarios.java</file>
+            <file>file:/C:/Users/gabid/OneDrive/Documentos/NetBeansProjects/SistemaGabrielaDolacio/src/view/JDlgVendasProdutos.java</file>
             <file>file:/C:/Users/gabid/OneDrive/Documentos/NetBeansProjects/SistemaGabrielaDolacio/src/bean/GldVendasRoupas.java</file>
+            <file>file:/C:/Users/gabid/OneDrive/Documentos/NetBeansProjects/SistemaGabrielaDolacio/src/bean/GldClientes.java</file>
+            <file>file:/C:/Users/gabid/OneDrive/Documentos/NetBeansProjects/SistemaGabrielaDolacio/src/view/JDlgVendasPesquisar.java</file>
         </group>
     </open-files>
 </project-private>
