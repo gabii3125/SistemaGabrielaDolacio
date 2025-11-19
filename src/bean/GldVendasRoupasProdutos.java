@@ -18,7 +18,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="gld_vendas_roupas_produtos"
-    ,catalog="sistemadolacio"
+    ,catalog="db_gabriela_dolacio"
 )
 public class GldVendasRoupasProdutos  implements java.io.Serializable {
 
