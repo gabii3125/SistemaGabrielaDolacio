@@ -8,6 +8,7 @@ import bean.GldUsuarios;
 import dao.UsuariosDAO;
 import view.JDlgUsuarios;
 import java.util.List;
+import tools.Util;
 
 
 /**
@@ -62,6 +63,11 @@ public class JDlgUsuarioPesquisar extends javax.swing.JDialog {
                 "", "", ""
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jBtnOk.setText("OK");
@@ -96,11 +102,21 @@ public class JDlgUsuarioPesquisar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
-     
+     if(jTable1.getSelectedRow() == -1) {
+            Util.mensagem("Nenhum registro foi selecionada. Favor selecionar um registro.");
+         
+     } else {
         GldUsuarios usuarios =  controllerUsuarios.getBean( jTable1.getSelectedRow() );
         jDlgUsuarios.beanView(usuarios);
         this.setVisible(false);
+     }
     }//GEN-LAST:event_jBtnOkActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+     if (evt.getClickCount() == 2) {
+            jBtnOkActionPerformed(null);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments

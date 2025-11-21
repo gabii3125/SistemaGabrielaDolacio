@@ -15,6 +15,20 @@ import org.hibernate.criterion.Restrictions;
  * @author u06075330135
  */
 public class UsuariosDAO extends AbstractDAO {
+    
+    public GldUsuarios logar(String apelido, String senha) {
+    session.beginTransaction();
+
+    Criteria criteria = session.createCriteria(GldUsuarios.class);
+    criteria.add(Restrictions.eq("gldApelido", apelido));
+    criteria.add(Restrictions.eq("gldSenha", senha));
+
+    GldUsuarios usuario = (GldUsuarios) criteria.uniqueResult();
+
+    session.getTransaction().commit();
+
+    return usuario;
+}
 
     @Override
     public void insert(Object object) {

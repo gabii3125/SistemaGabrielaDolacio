@@ -28,17 +28,17 @@ public class GldVendasRoupasProdutos  implements java.io.Serializable {
      private GldVendasRoupas gldVendasRoupas;
      private int gldQuantidade;
      private double gldValorUnitario;
-     private String gldStatusProduto;
+    
 
     public GldVendasRoupasProdutos() {
     }
 
-    public GldVendasRoupasProdutos(GldProdutosRoupas gldProdutosRoupas, GldVendasRoupas gldVendasRoupas, int gldQuantidade, double gldValorUnitario, String gldStatusProduto) {
+    public GldVendasRoupasProdutos(GldProdutosRoupas gldProdutosRoupas, GldVendasRoupas gldVendasRoupas, int gldQuantidade, double gldValorUnitario) {
        this.gldProdutosRoupas = gldProdutosRoupas;
        this.gldVendasRoupas = gldVendasRoupas;
        this.gldQuantidade = gldQuantidade;
        this.gldValorUnitario = gldValorUnitario;
-       this.gldStatusProduto = gldStatusProduto;
+     
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -53,7 +53,7 @@ public class GldVendasRoupasProdutos  implements java.io.Serializable {
         this.gldIdVendasProdutos = gldIdVendasProdutos;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="gld_produto", nullable=false)
     public GldProdutosRoupas getGldProdutosRoupas() {
         return this.gldProdutosRoupas;
@@ -63,7 +63,7 @@ public class GldVendasRoupasProdutos  implements java.io.Serializable {
         this.gldProdutosRoupas = gldProdutosRoupas;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="gld_venda", nullable=false)
     public GldVendasRoupas getGldVendasRoupas() {
         return this.gldVendasRoupas;
@@ -93,15 +93,6 @@ public class GldVendasRoupasProdutos  implements java.io.Serializable {
         this.gldValorUnitario = gldValorUnitario;
     }
 
-    
-    @Column(name="gld_status_produto", nullable=false, length=20)
-    public String getGldStatusProduto() {
-        return this.gldStatusProduto;
-    }
-    
-    public void setGldStatusProduto(String gldStatusProduto) {
-        this.gldStatusProduto = gldStatusProduto;
-    }
 
 
 
