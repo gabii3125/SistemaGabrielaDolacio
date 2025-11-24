@@ -126,21 +126,21 @@ public class GldProdutosRoupas  implements java.io.Serializable {
     public void setGldDescricao(String gldDescricao) {
         this.gldDescricao = gldDescricao;
     }
-    @Override
-    public String toString() {
-    return this.getGldNome(); 
+   @Override
+public String toString() {
+    return this.gldIdProdutos + " - " + this.gldNome;
 }
-    @Override
-public boolean equals(Object obj) {
-    if (obj instanceof GldClientes) {
-        GldProdutosRoupas produtos = (GldProdutosRoupas) obj;
-        return this.getGldIdProdutos()== produtos.getGldIdProdutos();
+
+@Override
+public boolean equals(Object object) {
+    if (object instanceof GldProdutosRoupas) {
+        GldProdutosRoupas produtos = (GldProdutosRoupas) object;
+        if (produtos.getGldIdProdutos() == this.getGldIdProdutos()) {
+            return true;
+        }
     }
     return false;
 }
-
-
-
 
 
 }

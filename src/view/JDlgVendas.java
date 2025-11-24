@@ -28,9 +28,10 @@ import tools.Util;
  * @author u1845853
  */
 public class JDlgVendas extends javax.swing.JDialog {
-
-     private boolean incluir;
+    
      ControllerVendasProdutos controllerVendasProd;
+     private boolean incluir;
+    
     
     private MaskFormatter mascaraDataVenda;
   private boolean pesquisado = false;
@@ -41,6 +42,7 @@ public class JDlgVendas extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Vendas");
          Util.habilitar(false, jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto,
             jTxtGldFormaPagamento, jCboGldClientes, jCboGldUsuarios, 
             jBtnGldConfirmar, jBtnGldCancelar);

@@ -31,9 +31,10 @@ public class JDlgVendasProdutos extends javax.swing.JDialog {
         
         ProdutosDAO produtosDAO = new ProdutosDAO();
         List listaProdutos = (List) produtosDAO.listAll();
-        for (int i = 0; i < listaProdutos.size(); i++) {
-         jCboProdutos.addItem((GldProdutosRoupas) listaProdutos.get(i));            
-}
+        for (Object object : listaProdutos) {
+            jCboProdutos.addItem((GldProdutosRoupas) object);
+        }
+         Util.habilitar(false, jTxtValorUni, jTxtTotal);
         
     }
      public void setTelaAnterior(JDlgVendas jDlgVendas) {

@@ -23,7 +23,7 @@ public class JDlgVendasPesquisar extends javax.swing.JDialog {
     public JDlgVendasPesquisar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setTitle("Pesquisa de usuarios");
+        setTitle("Pesquisa de vendas");
         setLocationRelativeTo(null);
          controllerVendas = new ControllerVendas();
         VendasDAO vendasDAO = new VendasDAO();
