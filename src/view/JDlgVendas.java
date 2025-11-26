@@ -45,7 +45,7 @@ public class JDlgVendas extends javax.swing.JDialog {
         setTitle("Vendas");
          Util.habilitar(false, jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto,
             jTxtGldFormaPagamento, jCboGldClientes, jCboGldUsuarios, 
-            jBtnGldConfirmar, jBtnGldCancelar);
+            jBtnGldConfirmar, jBtnGldCancelar, jBtnGldIncluirProd, jBtnGldAlterarProd, jBtnGldExcluirProd);
         
         
         
@@ -356,7 +356,7 @@ public class JDlgVendas extends javax.swing.JDialog {
        
         Util.habilitar(false, jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto,
             jTxtGldFormaPagamento, jCboGldClientes, jCboGldUsuarios, 
-            jBtnGldConfirmar, jBtnGldCancelar);
+            jBtnGldConfirmar, jBtnGldCancelar,jBtnGldIncluirProd, jBtnGldAlterarProd, jBtnGldExcluirProd);
         Util.habilitar(true, jBtnGldIncluir, jBtnGldAlterar, jBtnGldExcluir, jBtnGldPesquisar);
         Util.limpar(jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto);
         controllerVendasProd.setList(new ArrayList());
@@ -373,7 +373,7 @@ public class JDlgVendas extends javax.swing.JDialog {
      
           Util.habilitar(true, jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto,
         jTxtGldFormaPagamento, jCboGldClientes, jCboGldUsuarios, 
-        jBtnGldConfirmar, jBtnGldCancelar);
+        jBtnGldConfirmar, jBtnGldCancelar, jBtnGldIncluirProd, jBtnGldAlterarProd, jBtnGldExcluirProd);
 
        Util.habilitar(false, jBtnGldIncluir, jBtnGldAlterar, jBtnGldExcluir, jBtnGldPesquisar);
 
@@ -388,7 +388,7 @@ public class JDlgVendas extends javax.swing.JDialog {
         }
   Util.habilitar(true, jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto,
         jTxtGldFormaPagamento, jCboGldClientes, jCboGldUsuarios, 
-        jBtnGldConfirmar, jBtnGldCancelar);
+        jBtnGldConfirmar, jBtnGldCancelar, jBtnGldIncluirProd, jBtnGldAlterarProd, jBtnGldExcluirProd);
 
        Util.habilitar(false, jBtnGldIncluir, jBtnGldAlterar, jBtnGldExcluir, jBtnGldPesquisar);
 
@@ -436,7 +436,7 @@ public class JDlgVendas extends javax.swing.JDialog {
          
          Util.habilitar(false, jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto,
             jTxtGldFormaPagamento, jCboGldClientes, jCboGldUsuarios, 
-            jBtnGldConfirmar, jBtnGldCancelar);
+            jBtnGldConfirmar, jBtnGldCancelar,jBtnGldIncluirProd, jBtnGldAlterarProd, jBtnGldExcluirProd);
         Util.habilitar(true, jBtnGldIncluir, jBtnGldAlterar, jBtnGldExcluir, jBtnGldPesquisar);
         Util.limpar(jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto);
     }//GEN-LAST:event_jBtnGldConfirmarActionPerformed
