@@ -402,11 +402,18 @@ public class JDlgVendas extends javax.swing.JDialog {
             return;
         }
         
-        
-       if (Util.pergunta("Deseja excluir ?") == true) {
-            VendasDAO vendasDAO = new VendasDAO();
-            vendasDAO.delete(viewBean());
+         if (Util.pergunta("Deseja excluir ?") == true) {
+            VendasDAO vendasDAO = new VendasDAO(); 
+            VendasProdutosDAO vendasProdutosDAO = new VendasProdutosDAO();
+           
+            
+             for (int ind = 0; ind < jTable1.getRowCount(); ind++) {
+                GldVendasRoupasProdutos gldVendasRoupasProdutos = controllerVendasProd.getBean(ind);
+                vendasProdutosDAO.delete(gldVendasRoupasProdutos);
+            }
+              vendasDAO.delete(viewBean()); 
         }
+      
        Util.limpar(jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto);
        controllerVendasProd.setList(new ArrayList());
     }//GEN-LAST:event_jBtnGldExcluirActionPerformed
