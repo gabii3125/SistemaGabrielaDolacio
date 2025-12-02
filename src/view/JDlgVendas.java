@@ -377,7 +377,7 @@ public class JDlgVendas extends javax.swing.JDialog {
 
        Util.habilitar(false, jBtnGldIncluir, jBtnGldAlterar, jBtnGldExcluir, jBtnGldPesquisar);
 
-    Util.limpar(jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto);
+    Util.limpar(jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto, jTxtGldFormaPagamento);
         incluir = true;
     }//GEN-LAST:event_jBtnGldIncluirActionPerformed
 

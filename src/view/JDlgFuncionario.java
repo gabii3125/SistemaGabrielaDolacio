@@ -26,6 +26,7 @@ public class JDlgFuncionario extends javax.swing.JDialog {
   private boolean incluir;
      private MaskFormatter mascaraCpf;
     private MaskFormatter mascaraDataNasc;
+      private MaskFormatter mascaraTelefone;
   private boolean pesquisado = false;
     /**
      * Creates new form JDlgFuncionario
@@ -35,14 +36,16 @@ public class JDlgFuncionario extends javax.swing.JDialog {
         initComponents();
          setTitle("Funcionários");
         setLocationRelativeTo(null);
-         Util.habilitar(false, jTxtNome, jTxtCodigo, jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1
+         Util.habilitar(false, jTxtNome, jTxtCodigo, jFmtCpf,jTxtEmail, jFmtTelefone,jTxtSalario, jCboFuncao, jChbAtivo1
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
          
           try {
             mascaraCpf = new MaskFormatter("###.###.###-##");
             mascaraDataNasc = new MaskFormatter("##/##/####");
+             mascaraTelefone = new MaskFormatter("(##) #####-####");
             jFmtCpf.setFormatterFactory(new DefaultFormatterFactory(mascaraCpf));
             jFmtDataNasc.setFormatterFactory(new DefaultFormatterFactory(mascaraDataNasc));
+             jFmtTelefone.setFormatterFactory(new DefaultFormatterFactory(mascaraTelefone));
            
         } catch (ParseException ex) {
             Logger.getLogger(JDlgFuncionario.class.getName()).log(Level.SEVERE, null, ex);
@@ -55,8 +58,8 @@ public class JDlgFuncionario extends javax.swing.JDialog {
         jFmtCpf.setText(funcionario.getGldCpf());
         jFmtDataNasc.setText(Util.DataTostr(funcionario.getGldDataNascimento()));
         jTxtEmail.setText(funcionario.getGldEmail());
-        jTxtTelefone.setText(funcionario.getGldTelefone());
-        jTxtFuncao.setText(funcionario.getGldFuncao());
+        jFmtTelefone.setText(funcionario.getGldTelefone());
+         jCboFuncao.setSelectedIndex(Util.strToInt(funcionario.getGldFuncao()));
         jTxtSalario.setText(Util.DoubleTostr(funcionario.getGldSalario()));
        if (jChbAtivo1.isSelected() == true) {
             funcionario.setGldAtivo("S");
@@ -73,8 +76,8 @@ public class JDlgFuncionario extends javax.swing.JDialog {
         funcionario.setGldCpf(jFmtCpf.getText());
         funcionario.setGldDataNascimento(Util.strToData(jFmtDataNasc.getText()));
         funcionario.setGldEmail(jTxtEmail.getText());
-        funcionario.setGldTelefone(jTxtTelefone.getText());
-        funcionario.setGldFuncao(jTxtFuncao.getText());
+        funcionario.setGldTelefone(jFmtTelefone.getText());
+        funcionario.setGldFuncao(Util.IntTostr(jCboFuncao.getSelectedIndex()));
         funcionario.setGldSalario(Util.strToDouble(jTxtSalario.getText()));
          if (jChbAtivo1.isSelected() == true) {
             funcionario.setGldAtivo("S");
@@ -104,11 +107,9 @@ public class JDlgFuncionario extends javax.swing.JDialog {
         jFmtDataNasc = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         jTxtEmail = new javax.swing.JTextField();
-        jTxtTelefone = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jTxtSalario = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTxtFuncao = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jChbAtivo1 = new javax.swing.JCheckBox();
         jBtnPesquisar = new javax.swing.JButton();
@@ -117,6 +118,8 @@ public class JDlgFuncionario extends javax.swing.JDialog {
         jBtnExcluir = new javax.swing.JButton();
         jBtnConfirmar = new javax.swing.JButton();
         jBtnCancelar = new javax.swing.JButton();
+        jFmtTelefone = new javax.swing.JFormattedTextField();
+        jCboFuncao = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -191,6 +194,14 @@ public class JDlgFuncionario extends javax.swing.JDialog {
             }
         });
 
+        jFmtTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFmtTelefoneActionPerformed(evt);
+            }
+        });
+
+        jCboFuncao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Gerente", "Vendedor", "Repositor", "Caixa" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -213,7 +224,9 @@ public class JDlgFuncionario extends javax.swing.JDialog {
                         .addContainerGap(31, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addComponent(jTxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel14)
@@ -225,17 +238,15 @@ public class JDlgFuncionario extends javax.swing.JDialog {
                                     .addComponent(jFmtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jCboFuncao, 0, 259, Short.MAX_VALUE)
                                     .addComponent(jLabel5)
-                                    .addComponent(jTxtTelefone)
                                     .addComponent(jLabel7)
-                                    .addComponent(jTxtSalario)
+                                    .addComponent(jTxtSalario, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
                                     .addComponent(jLabel6)
-                                    .addComponent(jTxtFuncao, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(10, 10, 10)
-                                        .addComponent(jChbAtivo1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jLabel1)
-                            .addComponent(jTxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jChbAtivo1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jFmtTelefone))))
                         .addGap(111, 111, 111))))
         );
         layout.setVerticalGroup(
@@ -248,7 +259,7 @@ public class JDlgFuncionario extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jFmtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -262,10 +273,10 @@ public class JDlgFuncionario extends javax.swing.JDialog {
                     .addComponent(jLabel3)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jFmtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtFuncao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCboFuncao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFmtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -307,11 +318,11 @@ public class JDlgFuncionario extends javax.swing.JDialog {
       
         
         incluir = true;
-        Util.habilitar(true, jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
+        Util.habilitar(true, jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jFmtTelefone,jTxtSalario, jCboFuncao, jChbAtivo1, jBtnIncluir
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
         Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
         
-         Util.limpar(jTxtCodigo,jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
+         Util.limpar(jTxtCodigo,jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jFmtTelefone,jTxtSalario, jCboFuncao, jChbAtivo1, jBtnIncluir
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
@@ -324,7 +335,7 @@ public class JDlgFuncionario extends javax.swing.JDialog {
         
         
         
-        Util.habilitar(true, jTxtNome,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
+        Util.habilitar(true, jTxtNome,jFmtCpf,jTxtEmail, jFmtTelefone,jTxtSalario, jCboFuncao, jChbAtivo1, jBtnIncluir
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
         Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
         jTxtNome.grabFocus();
@@ -343,7 +354,7 @@ public class JDlgFuncionario extends javax.swing.JDialog {
             funcionariosDAO.delete(viewBean());
         }
         
-         Util.limpar(jTxtCodigo,jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
+         Util.limpar(jTxtCodigo,jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jFmtTelefone,jTxtSalario, jCboFuncao, jChbAtivo1, jBtnIncluir
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
@@ -358,22 +369,26 @@ public class JDlgFuncionario extends javax.swing.JDialog {
             
         }
         
-        Util.habilitar(false, jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
+        Util.habilitar(false, jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jFmtTelefone,jTxtSalario, jCboFuncao, jChbAtivo1, jBtnIncluir
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
         Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-        Util.limpar(jTxtCodigo,jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
+        Util.limpar(jTxtCodigo,jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jFmtTelefone,jTxtSalario, jCboFuncao, jChbAtivo1, jBtnIncluir
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
 
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
 
     private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
-         Util.habilitar(false, jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir
+         Util.habilitar(false, jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jFmtTelefone,jTxtSalario, jCboFuncao, jChbAtivo1, jBtnIncluir
             , jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
         Util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-        Util.limpar(jTxtCodigo,jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jTxtTelefone,jTxtSalario, jTxtFuncao, jChbAtivo1, jBtnIncluir, jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
+        Util.limpar(jTxtCodigo,jTxtNome, jTxtCodigo,jFmtCpf,jTxtEmail, jFmtTelefone,jTxtSalario, jCboFuncao, jChbAtivo1, jBtnIncluir, jFmtDataNasc, jBtnConfirmar,jBtnCancelar);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnCancelarActionPerformed
+
+    private void jFmtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFmtTelefoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFmtTelefoneActionPerformed
 
     /**
      * @param args the command line arguments
@@ -424,9 +439,11 @@ public class JDlgFuncionario extends javax.swing.JDialog {
     private javax.swing.JButton jBtnExcluir;
     private javax.swing.JButton jBtnIncluir;
     private javax.swing.JButton jBtnPesquisar;
+    private javax.swing.JComboBox jCboFuncao;
     private javax.swing.JCheckBox jChbAtivo1;
     private javax.swing.JFormattedTextField jFmtCpf;
     private javax.swing.JFormattedTextField jFmtDataNasc;
+    private javax.swing.JFormattedTextField jFmtTelefone;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
@@ -437,9 +454,7 @@ public class JDlgFuncionario extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField jTxtCodigo;
     private javax.swing.JTextField jTxtEmail;
-    private javax.swing.JTextField jTxtFuncao;
     private javax.swing.JTextField jTxtNome;
     private javax.swing.JTextField jTxtSalario;
-    private javax.swing.JTextField jTxtTelefone;
     // End of variables declaration//GEN-END:variables
 }
