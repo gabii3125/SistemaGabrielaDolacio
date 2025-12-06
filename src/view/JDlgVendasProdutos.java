@@ -17,6 +17,7 @@ import tools.Util;
  */
 public class JDlgVendasProdutos extends javax.swing.JDialog {
     JDlgVendas jDlgVendas;
+     boolean incluir;
     /**
      * Creates new form JDlgVendasProdutos
      */
@@ -37,8 +38,15 @@ public class JDlgVendasProdutos extends javax.swing.JDialog {
          Util.habilitar(false, jTxtValorUni, jTxtTotal);
         
     }
-     public void setTelaAnterior(JDlgVendas jDlgVendas) {
+     public void setTelaAnterior(JDlgVendas jDlgVendas, GldVendasRoupasProdutos gldVendasRoupasProdutos) {
         this.jDlgVendas = jDlgVendas;
+          if (gldVendasRoupasProdutos != null) {
+            incluir = false;
+            jCboProdutos.setSelectedItem(gldVendasRoupasProdutos.getGldProdutosRoupas());
+            jTxtQuantidade.setText(Util.IntTostr(gldVendasRoupasProdutos.getGldQuantidade()));        
+        } else {
+            incluir = true;
+        }
     }
 
     /**
@@ -167,8 +175,15 @@ public class JDlgVendasProdutos extends javax.swing.JDialog {
          GldVendasRoupasProdutos gldVendasRoupasProdutos = new GldVendasRoupasProdutos();
         gldVendasRoupasProdutos.setGldProdutosRoupas((GldProdutosRoupas) jCboProdutos.getSelectedItem());
         gldVendasRoupasProdutos.setGldQuantidade(Util.strToInt(jTxtQuantidade.getText()) );
-        gldVendasRoupasProdutos.setGldValorUnitario(Util.strToDouble(jTxtValorUni.getText()) );                
-        jDlgVendas.controllerVendasProd.addBean(gldVendasRoupasProdutos);
+        gldVendasRoupasProdutos.setGldValorUnitario(Util.strToDouble(jTxtValorUni.getText()) ); 
+         if (incluir == true) {
+           jDlgVendas.controllerVendasProd.addBean(gldVendasRoupasProdutos);
+        } else {
+            jDlgVendas.controllerVendasProd.removeBean(jDlgVendas.getjTable1().getSelectedRow());
+            jDlgVendas.controllerVendasProd.addBean(gldVendasRoupasProdutos);
+        
+        }
+        
         setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 

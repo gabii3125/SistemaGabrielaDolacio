@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 import tools.Util;
@@ -73,6 +74,10 @@ public class JDlgVendas extends javax.swing.JDialog {
         controllerVendasProd.setList(new ArrayList());
         jTable1.setModel(controllerVendasProd);
     }
+    
+    public JTable getjTable1() {
+        return jTable1;
+    }   
      public void beanView(GldVendasRoupas vendasRoupas) {
         jTxtGldCodigo.setText(Util.IntTostr(vendasRoupas.getGldIdVendas() ));
         jFmtGldDataVenda.setText(Util.DataTostr(vendasRoupas.getGldDataVenda()));
@@ -358,7 +363,7 @@ public class JDlgVendas extends javax.swing.JDialog {
             jTxtGldFormaPagamento, jCboGldClientes, jCboGldUsuarios, 
             jBtnGldConfirmar, jBtnGldCancelar,jBtnGldIncluirProd, jBtnGldAlterarProd, jBtnGldExcluirProd);
         Util.habilitar(true, jBtnGldIncluir, jBtnGldAlterar, jBtnGldExcluir, jBtnGldPesquisar);
-        Util.limpar(jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto);
+        Util.limpar(jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto, jTxtGldFormaPagamento);
         controllerVendasProd.setList(new ArrayList());
     }//GEN-LAST:event_jBtnGldCancelarActionPerformed
 
@@ -414,7 +419,7 @@ public class JDlgVendas extends javax.swing.JDialog {
               vendasDAO.delete(viewBean()); 
         }
       
-       Util.limpar(jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto);
+       Util.limpar(jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto, jTxtGldFormaPagamento);
        controllerVendasProd.setList(new ArrayList());
     }//GEN-LAST:event_jBtnGldExcluirActionPerformed
 
@@ -422,7 +427,7 @@ public class JDlgVendas extends javax.swing.JDialog {
         VendasDAO vendasDAO = new VendasDAO();
         VendasProdutosDAO vendasProdutosDAO = new VendasProdutosDAO();
         GldVendasRoupas gldVendasRoupas = viewBean();
-        if (incluir == true) {
+      if (incluir == true) {
             vendasDAO.insert(gldVendasRoupas);
             for (int ind = 0; ind < jTable1.getRowCount(); ind++) {
                 GldVendasRoupasProdutos gldVendasRoupasProdutos = controllerVendasProd.getBean(ind);
@@ -431,14 +436,21 @@ public class JDlgVendas extends javax.swing.JDialog {
             }
         } else {
             vendasDAO.update(gldVendasRoupas);
-
+            //excluo todos os pedidos produtos do pedido
+            vendasProdutosDAO.deleteProdutos(gldVendasRoupas);
+            //incluo os pedidos produtos
+            for (int ind = 0; ind < jTable1.getRowCount(); ind++) {
+                GldVendasRoupasProdutos gldVendasRoupasProdutos = controllerVendasProd.getBean(ind);
+                gldVendasRoupasProdutos.setGldVendasRoupas(gldVendasRoupas);
+                vendasProdutosDAO.insert(gldVendasRoupasProdutos);
+            }
         }
          
          Util.habilitar(false, jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto,
             jTxtGldFormaPagamento, jCboGldClientes, jCboGldUsuarios, 
             jBtnGldConfirmar, jBtnGldCancelar,jBtnGldIncluirProd, jBtnGldAlterarProd, jBtnGldExcluirProd);
         Util.habilitar(true, jBtnGldIncluir, jBtnGldAlterar, jBtnGldExcluir, jBtnGldPesquisar);
-        Util.limpar(jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto);
+        Util.limpar(jTxtGldCodigo, jFmtGldDataVenda, jTxtGldTotal, jTxtGldDesconto,jTxtGldFormaPagamento);
     }//GEN-LAST:event_jBtnGldConfirmarActionPerformed
 
     private void jBtnGldExcluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGldExcluirProdActionPerformed
@@ -454,14 +466,16 @@ public class JDlgVendas extends javax.swing.JDialog {
 
     private void jBtnGldAlterarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGldAlterarProdActionPerformed
         // TODO add your handling code here:
-        JDlgVendasProdutos jDlgVendasProdutos = new JDlgVendasProdutos(null, true);
+         JDlgVendasProdutos jDlgVendasProdutos = new JDlgVendasProdutos(null, true);
+        GldVendasRoupasProdutos gldVendasRoupasProdutos = controllerVendasProd.getBean(jTable1.getSelectedRow());
+        jDlgVendasProdutos.setTelaAnterior(this, gldVendasRoupasProdutos);
         jDlgVendasProdutos.setVisible(true);
     }//GEN-LAST:event_jBtnGldAlterarProdActionPerformed
 
     private void jBtnGldIncluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGldIncluirProdActionPerformed
         // TODO add your handling code here:
         JDlgVendasProdutos jDlgVendasProdutos = new JDlgVendasProdutos(null, true);
-        jDlgVendasProdutos.setTelaAnterior(this);
+        jDlgVendasProdutos.setTelaAnterior(this, null);
         jDlgVendasProdutos.setVisible(true);
     }//GEN-LAST:event_jBtnGldIncluirProdActionPerformed
 
