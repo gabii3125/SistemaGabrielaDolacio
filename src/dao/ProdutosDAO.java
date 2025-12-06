@@ -51,6 +51,31 @@ public class ProdutosDAO extends AbstractDAO {
         return lista;
         
     }
+    public Object listNome(String nome) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(GldProdutosRoupas.class);
+        criteria.add(Restrictions.like("gldNome", "%"+nome+"%"));
+        List lista = criteria.list();
+        session.getTransaction().commit();        
+        return lista;
+    }
+    public Object listValor(double valor) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(GldProdutosRoupas.class);
+        criteria.add(Restrictions.ge("gldPreco", valor));
+        List lista = criteria.list();
+        session.getTransaction().commit();        
+        return lista;
+    }
+    public Object listNomeValor(String nome, double valor) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(GldProdutosRoupas.class);
+        criteria.add(Restrictions.like("gldNome", "%"+nome+"%"));
+         criteria.add(Restrictions.ge("gldPreco", valor));
+        List lista = criteria.list();
+        session.getTransaction().commit();        
+        return lista;
+    }
 
     @Override
     public Object listAll() {
