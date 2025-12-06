@@ -117,6 +117,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMnuMovimentos">
           <Properties>
+            <Property name="mnemonic" type="int" value="77"/>
             <Property name="text" type="java.lang.String" value="Movimentos"/>
           </Properties>
           <Events>
@@ -142,6 +143,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
+            <Property name="mnemonic" type="int" value="67"/>
             <Property name="text" type="java.lang.String" value="Consultas"/>
           </Properties>
           <SubComponents>

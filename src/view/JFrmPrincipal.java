@@ -135,6 +135,7 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMnuCadastros);
 
+        jMnuMovimentos.setMnemonic('M');
         jMnuMovimentos.setText("Movimentos");
         jMnuMovimentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,6 +156,7 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMnuMovimentos);
 
+        jMenu1.setMnemonic('C');
         jMenu1.setText("Consultas");
 
         jMnuConsultaClientes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
