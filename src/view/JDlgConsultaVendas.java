@@ -5,37 +5,53 @@
 package view;
 
 
-import dao.FuncionariosDAO;
+import dao.VendasDAO;
+import java.text.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
+import tools.Util;
 
 
 /**
  *
  * @author Marcos
  */
-public class JDlgConsultaFuncionarios extends javax.swing.JDialog {
+public class JDlgConsultaVendas extends javax.swing.JDialog {
 
     /**
      * Creates new form JDlgUsuariosPesquisar
      */
-    ControllerConsultasFuncionarios controllerConsultasFuncionarios;
+    ControllerConsultasVendas controllerConsultasVendas;
+       private MaskFormatter mascaraDataVenda;
     
                                                                                                                                                                                                                           
 
 
 
-    public JDlgConsultaFuncionarios(java.awt.Frame parent, boolean modal) {
+    public JDlgConsultaVendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Consulta de Funcionários");
-        controllerConsultasFuncionarios = new ControllerConsultasFuncionarios();
+        setTitle("Consulta de Vendas");
+        controllerConsultasVendas = new ControllerConsultasVendas();
         List lista = new ArrayList();
-        FuncionariosDAO funcionariosDAO = new FuncionariosDAO();
-        controllerConsultasFuncionarios.setList(lista);
-        jTable1.setModel(controllerConsultasFuncionarios);
+        VendasDAO vendasDAO = new VendasDAO();
+        controllerConsultasVendas.setList(lista);
+        jTable1.setModel(controllerConsultasVendas);
+        try {
+           
+            mascaraDataVenda = new MaskFormatter("##/##/####");
+             jFmtDataVenda.setFormatterFactory(new DefaultFormatterFactory(mascaraDataVenda));
+           
+           
+        } catch (ParseException ex) {
+            Logger.getLogger(JDlgFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -53,10 +69,10 @@ public class JDlgConsultaFuncionarios extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
         jBtnOk = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTxtNome = new javax.swing.JTextField();
+        jTxtTotal = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jBtnConsultar = new javax.swing.JButton();
-        jTxtCpf = new javax.swing.JTextField();
+        jFmtDataVenda = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -85,20 +101,20 @@ public class JDlgConsultaFuncionarios extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setText("Nome");
+        jLabel1.setText("Data da venda ");
 
-        jLabel2.setText("3 primeiros dígitos do cpf");
+        jTxtTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTxtTotalActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Total Maior que ");
 
         jBtnConsultar.setText("Consultar");
         jBtnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnConsultarActionPerformed(evt);
-            }
-        });
-
-        jTxtCpf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTxtCpfActionPerformed(evt);
             }
         });
 
@@ -116,15 +132,14 @@ public class JDlgConsultaFuncionarios extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(jFmtDataVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(92, 92, 92)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jBtnConsultar))
-                            .addComponent(jLabel2))))
+                                .addComponent(jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBtnConsultar)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -133,16 +148,17 @@ public class JDlgConsultaFuncionarios extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jBtnConsultar)
-                            .addComponent(jTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                            .addComponent(jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBtnConsultar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(11, 11, 11)
+                        .addComponent(jFmtDataVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnOk)
@@ -164,26 +180,29 @@ public class JDlgConsultaFuncionarios extends javax.swing.JDialog {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jBtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConsultarActionPerformed
-    FuncionariosDAO funcionariosDAO = new FuncionariosDAO();
+    VendasDAO vendasDAO = new VendasDAO();
       List lista;
-      if ((jTxtNome.getText().isEmpty() == false)
-              && (jTxtCpf.getText().isEmpty() == false)){
-             lista = (List) funcionariosDAO.listNomeCpf(jTxtNome.getText(),
-                     jTxtCpf.getText()); 
-      }else if(jTxtNome.getText().isEmpty() == false){
-           lista = (List) funcionariosDAO.listNome(jTxtNome.getText());
-      }else if(jTxtCpf.getText() .isEmpty()== false){
-          lista = (List) funcionariosDAO.listCpf(jTxtCpf.getText());
+     
+       if ((jFmtDataVenda.getText().isEmpty() == false)
+              && (jTxtTotal.getText().isEmpty() == false)){
+             lista = (List) vendasDAO.listDataVendaTotal(
+                     Util.strToData(jFmtDataVenda.getText()),
+                     Util.strToDouble(jTxtTotal.getText())); 
+      }else if(jFmtDataVenda.getText().isEmpty() == false){
+           lista = (List) vendasDAO.listDataVenda(
+                   Util.strToData(jFmtDataVenda.getText()));
+      }else if(jTxtTotal.getText() .isEmpty()== false){
+          lista = (List) vendasDAO.listTotal(Util.strToDouble(jTxtTotal.getText()));
       }else {
-            lista = (List) funcionariosDAO.listAll();
+            lista = (List) vendasDAO.listAll();
       }
-      controllerConsultasFuncionarios.setList(lista);
+      controllerConsultasVendas.setList(lista);
     
     }//GEN-LAST:event_jBtnConsultarActionPerformed
 
-    private void jTxtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtCpfActionPerformed
+    private void jTxtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtTotalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTxtCpfActionPerformed
+    }//GEN-LAST:event_jTxtTotalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,13 +221,13 @@ public class JDlgConsultaFuncionarios extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JDlgConsultaFuncionarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgConsultaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JDlgConsultaFuncionarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgConsultaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JDlgConsultaFuncionarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgConsultaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDlgConsultaFuncionarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgConsultaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -230,7 +249,7 @@ public class JDlgConsultaFuncionarios extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JDlgConsultaFuncionarios dialog = new JDlgConsultaFuncionarios(new javax.swing.JFrame(), true);
+                JDlgConsultaVendas dialog = new JDlgConsultaVendas(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -245,11 +264,11 @@ public class JDlgConsultaFuncionarios extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnConsultar;
     private javax.swing.JButton jBtnOk;
+    private javax.swing.JFormattedTextField jFmtDataVenda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTxtCpf;
-    private javax.swing.JTextField jTxtNome;
+    private javax.swing.JTextField jTxtTotal;
     // End of variables declaration//GEN-END:variables
 }

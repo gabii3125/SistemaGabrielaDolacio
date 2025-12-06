@@ -6,6 +6,7 @@
 package dao;
 
 import bean.GldVendasRoupas;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -50,6 +51,31 @@ public class VendasDAO extends AbstractDAO {
         session.getTransaction().commit();
         return lista;
         
+    }
+    public Object listDataVenda(Date dataVenda) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(GldVendasRoupas.class);
+        criteria.add(Restrictions.eq("gldDataVenda", dataVenda));
+        List lista = criteria.list();
+        session.getTransaction().commit();        
+        return lista;
+    }
+    public Object listTotal(double valor) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(GldVendasRoupas.class);
+        criteria.add(Restrictions.ge("gldTotal", valor));
+        List lista = criteria.list();
+        session.getTransaction().commit();        
+        return lista;
+    }
+    public Object listDataVendaTotal(Date dataVenda, double total) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(GldVendasRoupas.class);
+        criteria.add(Restrictions.eq("gldDataVenda", dataVenda));
+         criteria.add(Restrictions.ge("gldTotal",total));
+        List lista = criteria.list();
+        session.getTransaction().commit();        
+        return lista;
     }
 
     @Override

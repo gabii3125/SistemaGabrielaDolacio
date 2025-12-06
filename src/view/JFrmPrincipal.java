@@ -283,10 +283,14 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 
     private void jMnuConsultaFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuConsultaFuncionarioActionPerformed
         // TODO add your handling code here:
+        JDlgConsultaFuncionarios JDlgConsultaFuncionarios = new JDlgConsultaFuncionarios(this, true);
+        JDlgConsultaFuncionarios.setVisible(true);
     }//GEN-LAST:event_jMnuConsultaFuncionarioActionPerformed
 
     private void jMnuCOnsultaVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuCOnsultaVendasActionPerformed
         // TODO add your handling code here:
+          JDlgConsultaVendas JDlgConsultaVendas = new JDlgConsultaVendas(this, true);
+        JDlgConsultaVendas.setVisible(true);
     }//GEN-LAST:event_jMnuCOnsultaVendasActionPerformed
 
     /**
