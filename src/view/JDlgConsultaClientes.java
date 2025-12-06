@@ -6,7 +6,6 @@ package view;
 
 import bean.GldClientes;
 import dao.ClientesDAO;
-import dao.UsuariosDAO;
 import java.util.ArrayList;
 import java.util.List;
 import tools.Util;
@@ -31,7 +30,7 @@ public class JDlgConsultaClientes extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Consulta de Produtos");
+        setTitle("Consulta de Clientes");
         controllerConsultasClientes = new ControllerConsultasClientes();
         List lista = new ArrayList();
         ClientesDAO clientesDAO = new ClientesDAO();

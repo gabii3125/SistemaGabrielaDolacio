@@ -271,6 +271,8 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 
     private void jMnuConsultaClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuConsultaClientesActionPerformed
         // TODO add your handling code here:
+        JDlgConsultaClientes jDlgConsultaClientes = new JDlgConsultaClientes(this, true);
+        jDlgConsultaClientes.setVisible(true);
     }//GEN-LAST:event_jMnuConsultaClientesActionPerformed
 
     private void jMnuConsultaProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuConsultaProdutosActionPerformed

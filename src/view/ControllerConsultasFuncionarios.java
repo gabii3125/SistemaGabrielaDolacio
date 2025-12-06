@@ -4,7 +4,8 @@
  */
 package view;
 
-import bean.GldClientes;
+import bean.GldFuncionarios;
+import bean.GldProdutosRoupas;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -13,18 +14,18 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Marcos
  */
-public class ControllerConsultasClientes extends AbstractTableModel {
+public class ControllerConsultasFuncionarios extends AbstractTableModel {
 
-    private List lstClientes;
+    private List lstFuncionarios;
 
-    public void setList(List lstClientes) {
-        this.lstClientes = lstClientes;
+    public void setList(List lstFuncionarios) {
+        this.lstFuncionarios = lstFuncionarios;
         this.fireTableDataChanged();
     }
 
     @Override
     public int getRowCount() {
-        return lstClientes.size();
+        return lstFuncionarios.size();
                 
     }
 
@@ -35,13 +36,13 @@ public class ControllerConsultasClientes extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        GldClientes gldClientes = (GldClientes) lstClientes.get( rowIndex);
+        GldFuncionarios gldFuncionarios = (GldFuncionarios) lstFuncionarios.get( rowIndex);
         if ( columnIndex == 0 ){
-            return gldClientes.getGldIdClientes();
+            return gldFuncionarios.getGldIdFuncionario();
         } else if (columnIndex ==1) {
-            return gldClientes.getGldNome();        
+            return gldFuncionarios.getGldNome();        
         } else if (columnIndex ==2) {
-            return gldClientes.getGldCpf();
+            return gldFuncionarios.getGldCpf();
         } 
         return "";
     }

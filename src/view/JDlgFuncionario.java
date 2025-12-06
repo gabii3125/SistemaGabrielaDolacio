@@ -201,6 +201,11 @@ public class JDlgFuncionario extends javax.swing.JDialog {
         });
 
         jCboFuncao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Gerente", "Vendedor", "Repositor", "Caixa" }));
+        jCboFuncao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCboFuncaoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -389,6 +394,10 @@ public class JDlgFuncionario extends javax.swing.JDialog {
     private void jFmtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFmtTelefoneActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFmtTelefoneActionPerformed
+
+    private void jCboFuncaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCboFuncaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCboFuncaoActionPerformed
 
     /**
      * @param args the command line arguments

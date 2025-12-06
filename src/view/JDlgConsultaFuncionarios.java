@@ -5,38 +5,37 @@
 package view;
 
 
-import dao.ProdutosDAO;
+import dao.FuncionariosDAO;
 
 import java.util.ArrayList;
 import java.util.List;
-import tools.Util;
 
 
 /**
  *
  * @author Marcos
  */
-public class JDlgConsultaProdutos extends javax.swing.JDialog {
+public class JDlgConsultaFuncionarios extends javax.swing.JDialog {
 
     /**
      * Creates new form JDlgUsuariosPesquisar
      */
-    ControllerConsultasProdutos controllerConsultasProdutos;
+    ControllerConsultasFuncionarios controllerConsultasFuncionarios;
     
                                                                                                                                                                                                                           
 
 
 
-    public JDlgConsultaProdutos(java.awt.Frame parent, boolean modal) {
+    public JDlgConsultaFuncionarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Consulta de Produtos");
-        controllerConsultasProdutos = new ControllerConsultasProdutos();
+        setTitle("Consulta de Funcionários");
+        controllerConsultasFuncionarios = new ControllerConsultasFuncionarios();
         List lista = new ArrayList();
-        ProdutosDAO produtosDAO = new ProdutosDAO();
-        controllerConsultasProdutos.setList(lista);
-        jTable1.setModel(controllerConsultasProdutos);
+        FuncionariosDAO funcionariosDAO = new FuncionariosDAO();
+        controllerConsultasFuncionarios.setList(lista);
+        jTable1.setModel(controllerConsultasFuncionarios);
 
     }
 
@@ -55,9 +54,9 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
         jBtnOk = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTxtNome = new javax.swing.JTextField();
-        jTxtValor = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jBtnConsultar = new javax.swing.JButton();
+        jTxtCpf = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -88,12 +87,18 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
 
         jLabel1.setText("Nome");
 
-        jLabel2.setText("Valor Maior que ");
+        jLabel2.setText("3 primeiros dígitos");
 
         jBtnConsultar.setText("Consultar");
         jBtnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnConsultarActionPerformed(evt);
+            }
+        });
+
+        jTxtCpf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTxtCpfActionPerformed(evt);
             }
         });
 
@@ -114,11 +119,12 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
                             .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTxtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jBtnConsultar)))))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jBtnConsultar))
+                            .addComponent(jLabel2))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -134,8 +140,8 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTxtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBtnConsultar))))
+                            .addComponent(jBtnConsultar)
+                            .addComponent(jTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -158,22 +164,26 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jBtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConsultarActionPerformed
-    ProdutosDAO produtosDAO = new ProdutosDAO();
+    FuncionariosDAO funcionariosDAO = new FuncionariosDAO();
       List lista;
       if ((jTxtNome.getText().isEmpty() == false)
-              && (jTxtValor.getText().isEmpty() == false)){
-             lista = (List) produtosDAO.listNomeValor(jTxtNome.getText(),
-                     Util.strToDouble(jTxtValor.getText())); 
+              && (jTxtCpf.getText().isEmpty() == false)){
+             lista = (List) funcionariosDAO.listNomeCpf(jTxtNome.getText(),
+                     jTxtCpf.getText()); 
       }else if(jTxtNome.getText().isEmpty() == false){
-           lista = (List) produtosDAO.listNome(jTxtNome.getText());
-      }else if(jTxtValor.getText() .isEmpty()== false){
-          lista = (List) produtosDAO.listValor(Util.strToDouble(jTxtValor.getText()));
+           lista = (List) funcionariosDAO.listNome(jTxtNome.getText());
+      }else if(jTxtCpf.getText() .isEmpty()== false){
+          lista = (List) funcionariosDAO.listCpf(jTxtCpf.getText());
       }else {
-            lista = (List) produtosDAO.listAll();
+            lista = (List) funcionariosDAO.listAll();
       }
-      controllerConsultasProdutos.setList(lista);
+      controllerConsultasFuncionarios.setList(lista);
     
     }//GEN-LAST:event_jBtnConsultarActionPerformed
+
+    private void jTxtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtCpfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtCpfActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,14 +202,22 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JDlgConsultaProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgConsultaFuncionarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JDlgConsultaProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgConsultaFuncionarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JDlgConsultaProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgConsultaFuncionarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDlgConsultaProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgConsultaFuncionarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -212,7 +230,7 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JDlgConsultaProdutos dialog = new JDlgConsultaProdutos(new javax.swing.JFrame(), true);
+                JDlgConsultaFuncionarios dialog = new JDlgConsultaFuncionarios(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -231,7 +249,7 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTxtCpf;
     private javax.swing.JTextField jTxtNome;
-    private javax.swing.JTextField jTxtValor;
     // End of variables declaration//GEN-END:variables
 }
