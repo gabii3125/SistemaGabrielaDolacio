@@ -183,6 +183,9 @@ public class JDlgVendasProdutos extends javax.swing.JDialog {
             jDlgVendas.controllerVendasProd.addBean(gldVendasRoupasProdutos);
         
         }
+  jDlgVendas.recalcularTotal();
+
+
         
         setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
